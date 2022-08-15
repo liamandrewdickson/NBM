@@ -9,6 +9,8 @@ namespace NapierBankMessageFilter.ApplicationLayer
     public class Main 
     {
         Email email = new Email();
+        Tweet tweet = new Tweet();
+        SMS sms = new SMS();
 
 
         public string ValidateMessageType(string msgID)
@@ -86,11 +88,11 @@ namespace NapierBankMessageFilter.ApplicationLayer
                 }
                 else if (msgType == "Tweet")
                 {
-                    tweet.ValidateTweeter()
+                    tweet.ValidateTweeter(msg);
                 }
                 else if (msgType == "SMS")
                 {
-                    sms.ValidateTweeter()
+                    sms.ValidatePhoneNumber(msg);
                 }
 
                 if (body.Length > 140)
