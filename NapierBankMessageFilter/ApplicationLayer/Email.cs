@@ -10,9 +10,11 @@ namespace NapierBankMessageFilter.ApplicationLayer
         public void ValidateSubject(string msg)
         {
             string[] msgParts;
-            string[] delimiters = { "Subject: ", "\nMessage Text: " };
-            msgParts = msg.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
-            string subject = msgParts[1];
+            int pFrom = msg.IndexOf("Subject: ") + "Subject: ".Length;
+            int pTo = msg.LastIndexOf("\nMessage Text: ");
+            //msgParts = msg.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
+            string subject = msg.Substring(pFrom, pTo - pFrom);
+
             if (!string.IsNullOrEmpty(subject))
             {
                 if (subject.Length > 20)

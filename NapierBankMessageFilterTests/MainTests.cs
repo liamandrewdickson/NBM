@@ -41,7 +41,7 @@ namespace NapierBankMessageFilterTests
         }
 
         [TestMethod]
-        public void GetMessageBodyNullTest()
+        public void ValidateMessageBodyNullTest()
         {
             string msgType = "";
 
@@ -51,7 +51,7 @@ namespace NapierBankMessageFilterTests
 
         #region SetMessageLimit
         [TestMethod]
-        public void SetMessageLimitNullTest()
+        public void ValidateMessageLimitNullTest()
         {
             string msgType = "Email";
             string msg = "Sender: liam.dickson@liam.co.uk \nSubject: This is a test \nMessage Text: ";
