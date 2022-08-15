@@ -10,10 +10,10 @@ namespace NapierBankMessageFilter.ApplicationLayer
     {
         public void ValidateTweeter(string msg)
         {
-            string[] msgParts;
-            string[] delimiters = { "Sender: ", "\nMessage Text: " };
-            msgParts = msg.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
-            string tweeter = msgParts[1];
+            int pFrom = msg.IndexOf("Sender: ") + "Sender: ".Length;
+            int pTo = msg.LastIndexOf("\nMessage Text: ");
+            string tweeter = msg.Substring(pFrom, pTo - pFrom);
+
             Regex reg = new Regex(@"^(@){1}[1-9a-zA-Z]{15}");
 
 
@@ -23,7 +23,7 @@ namespace NapierBankMessageFilter.ApplicationLayer
                 {
                     if (tweeter.Length > 20)
                     {
-                        MessageBox.Show("There are too many characters in the sender of the email, please change the subject to fit the character limit of 20");
+                        MessageBox.Show("There are too many characters in the sender of the tweet, please change the subject to fit the character limit of 15 (not including @)");
                     }
                 }
             }
