@@ -42,7 +42,7 @@ namespace NapierBankMessageFilter.ApplicationLayer
             }
             else
             {
-                MessageBox.Show("Please do not pass Null values");
+                throw new ArgumentNullException("A Null value was passed to the function, please change the parameter");
             }
             
             return msgType;
@@ -63,13 +63,13 @@ namespace NapierBankMessageFilter.ApplicationLayer
                 }
             else
             {
-                MessageBox.Show("Please do not pass Null values");
+                throw new ArgumentNullException("A Null value was passed to the function, please change the parameter");
             }
 
             return body;
         }
 
-        public void SetMessageLimit(string msgType, string msg)
+        public void ValidateMessageLimit(string msgType, string msg)
         {
 
             string[] msgParts;
@@ -99,10 +99,11 @@ namespace NapierBankMessageFilter.ApplicationLayer
                 {
                     MessageBox.Show("There are too many characters in the body of the message, please change the message text to fit the character limit of 140");
                 }
+
             }
             else
             {
-                MessageBox.Show("Please do not pass Null values");
+                throw new ArgumentNullException("A Null value was passed to the function, please change the parameter");
             }
         }
 

@@ -58,7 +58,7 @@ namespace NapierBankMessageFilter
         private void btnSubmit_Click(object sender, RoutedEventArgs e)
         {
             msgBody = txtMsgBody.Text;
-            main.SetMessageLimit(msgType, msgBody);
+            main.ValidateMessageLimit(msgType, msgBody);
         }
     }
 }

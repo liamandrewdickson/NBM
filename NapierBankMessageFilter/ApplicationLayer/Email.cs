@@ -22,7 +22,7 @@ namespace NapierBankMessageFilter.ApplicationLayer
             }
             else
             {
-                MessageBox.Show("Please do not pass Null values");
+                throw new ArgumentNullException("A Null value was passed to the function, please change the parameter");
             }
         }
     }
