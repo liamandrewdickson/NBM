@@ -10,6 +10,7 @@ namespace NapierBankMessageFilter.ApplicationLayer
     public class Main 
     {
         private Dictionary<string, string> initialisms;
+
         Email email = new Email();
         Tweet tweet = new Tweet();
         SMS sms = new SMS();
@@ -19,6 +20,10 @@ namespace NapierBankMessageFilter.ApplicationLayer
         public void NBMStart()
         {
             Initialisms = LoadMessages.LoadTextWords();
+            LoadMessages.InitialiseLocations();
+            LoadMessages.DeserializeMessages("Email");
+            LoadMessages.DeserializeMessages("Tweet");
+            LoadMessages.DeserializeMessages("SMS");
         }
 
         public string ValidateMessageType(string msgID)
@@ -56,53 +61,9 @@ namespace NapierBankMessageFilter.ApplicationLayer
             return msgType;
         }
 
-        public string GetMessageSender(string msgType, string msg)
-        {
-            int pFrom = msg.IndexOf("Sender: ") + "Sender: ".Length;
-            int pTo = msg.LastIndexOf("\nMessage Text: ");
-            string sender = msg.Substring(pFrom, pTo - pFrom);
+        
 
-            if (!string.IsNullOrEmpty(sender))
-            {
-                switch (msgType)
-                {
-                    case "Email":
-                        break;
-                    case "Tweet":
-                        break;
-                    case "SMS":
-                        break;
-                }
-            }
-            else
-            {
-                throw new ArgumentNullException("A Null value was passed to the function, please change the parameter");
-            }
-            
-            return sender;
-
-        }
-
-        public string GetMessageBody(string msgType)
-        {
-            string body = "";
-
-            if (!string.IsNullOrEmpty(msgType))
-                if (msgType == "Email")
-                {
-                    body = "Sender: \nSubject: \nMessage Text: ";
-                }
-                else
-                {
-                    body = "Sender: \nMessage Text: ";
-                }
-            else
-            {
-                throw new ArgumentNullException("A Null value was passed to the function, please change the parameter");
-            }
-
-            return body;
-        }
+        
 
         public void ValidateMessageLimit(string msgType, string msg)
         {
@@ -115,7 +76,6 @@ namespace NapierBankMessageFilter.ApplicationLayer
             {
                 if (msgType == "Email")
                 {
-                    email.ValidateSubject(msg);
                     if (body.Length > 1028)
                     {
                         MessageBox.Show("There are too many characters in the body of the message, please change the message text to fit the character limit of 1028");
@@ -142,21 +102,27 @@ namespace NapierBankMessageFilter.ApplicationLayer
             }
         }
 
-        public void ValidateMessage(string msgType, string msgBody, string msgHeader, string msgSender)
+        public void ValidateMessage(string msg, string msgType, string msgBody, string msgHeader, string msgSender)
         {
+            string subject = "";
+
             switch (msgType)
             {
                 case "Email":
-                    Email sms = new Email(msgHeader, msgType, msgBody, msgSender);
-                    SaveMessages.SerializeMessage(tweet, msgType);
+                    Email e = new Email();
+                    subject = e.GetSubject(msg);
+                    Email email = new Email(msgHeader, subject, msgType, msgBody, msgSender);
+                    SaveMessages.SerializeMessage(email, msgType);
                     break;
                 case "Tweet":
                     Tweet tweet = new Tweet(msgHeader, msgType, msgBody, msgSender);
+                    tweet.ValidateTweeter(msg);
                     SaveMessages.SerializeMessage(tweet, msgType);
                     break;
                 case "SMS":
                     SMS sms = new SMS(msgHeader, msgType, msgBody, msgSender);
-                    SaveMessages.SerializeMessage(tweet, msgType);
+                    sms.ValidatePhoneNumber(msgSender);
+                    SaveMessages.SerializeMessage(sms, msgType);
                     break;
             }
         }

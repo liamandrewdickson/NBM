@@ -23,12 +23,13 @@ namespace NapierBankMessageFilter
     {
         private string msgType = "";
         private string msgHeader = "";
-        private string msgBody = "";
+        private string msg = "";
         Main main = new Main();
+        Message message = new Message();
 
         public string MsgType { get => msgType; set => msgType = value; }
         public string MsgHeader { get => msgHeader; set => msgHeader = value; }
-        public string MsgBody { get => msgBody; set => msgBody = value; }
+        public string Msg { get => msg; set => msg = value; }
 
         public MainWindow()
         {
@@ -52,7 +53,7 @@ namespace NapierBankMessageFilter
 
                 if (!String.IsNullOrEmpty(MsgType))
                 {
-                    txtMsgBody.Text = main.GetMessageBody(MsgType);
+                    txtMsgBody.Text = message.GetMessageBody(MsgType);
                     txtMsgBody.IsEnabled = true;
                     btnSubmit.IsEnabled = true;
                 }
@@ -62,10 +63,10 @@ namespace NapierBankMessageFilter
 
         private void btnSubmit_Click(object sender, RoutedEventArgs e)
         {
-            MsgBody = txtMsgBody.Text;
+            Msg = txtMsgBody.Text;
             MsgHeader = txtMsgID.Text;
-            main.ValidateMessageLimit(MsgType, MsgBody);
-            main.ValidateMessage(MsgType, MsgBody, MsgHeader, main.GetMessageSender(msgType, msgBody));
+            main.ValidateMessageLimit(MsgType, Msg);
+            main.ValidateMessage(Msg, MsgType, message.GetMessageText(Msg), MsgHeader, message.GetMessageSender(MsgType, Msg));
         }
     }
 }

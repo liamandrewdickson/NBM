@@ -7,11 +7,18 @@ namespace NapierBankMessageFilter.ApplicationLayer
 {
     public class Email : Message
     {
-        public Email(string header, string type, string body, string sender) : base(header, type, body, sender) { }
+        private string _subject;
+
+        public string Subject { get => _subject; set => _subject = value; }
+
+        public Email(string header, string subject, string type, string body, string sender) : base(header, type, body, sender) 
+        { 
+            Subject = subject;
+        }
 
         public Email() { }
 
-        public void ValidateSubject(string msg)
+        public string GetSubject(string msg)
         {
             int pFrom = msg.IndexOf("Subject: ") + "Subject: ".Length;
             int pTo = msg.LastIndexOf("\nMessage Text: ");
@@ -28,6 +35,7 @@ namespace NapierBankMessageFilter.ApplicationLayer
             {
                 throw new ArgumentNullException("A Null value was passed to the function, please change the parameter");
             }
+            return subject;
         }
     }
 }

@@ -16,18 +16,20 @@ namespace NapierBankMessageFilter.DataLayer
         {
             string fileName = message.Header + ".json";
             string location = AppDomain.CurrentDomain.BaseDirectory;
-
+            string output = "";
 
             switch (msgType)
             {
                 case "Email":
-                    location = location + @"..\..\..\Messages\Tweets";
+                    Email email = (Email)message;
+                    location = Path.GetFullPath(Path.Combine(location, @"..\..\..\Messages\Email"));
+                    output = JsonSerializer.Serialize(email);
                     break;
                 case "Tweet":
-                    location = location + @"..\..\..\Messages\Tweets";
+                    location = Path.GetFullPath(Path.Combine(location, @"..\..\..\Messages\Tweet"));
                     break;
                 case "SMS":
-                    location = location + @"..\..\..\Messages\Tweets";
+                    location = Path.GetFullPath(Path.Combine(location, @"..\..\..\Messages\SMS"));
                     break;
             }
 
@@ -35,7 +37,7 @@ namespace NapierBankMessageFilter.DataLayer
 
             string pathString = Path.Combine(location, fileName);
 
-            string output = JsonSerializer.Serialize(message);
+            
             File.WriteAllText(pathString, output);
         }
 
