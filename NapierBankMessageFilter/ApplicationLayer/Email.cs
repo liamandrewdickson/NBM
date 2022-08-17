@@ -7,6 +7,10 @@ namespace NapierBankMessageFilter.ApplicationLayer
 {
     public class Email : Message
     {
+        public Email(string header, string type, string body, string sender) : base(header, type, body, sender) { }
+
+        public Email() { }
+
         public void ValidateSubject(string msg)
         {
             int pFrom = msg.IndexOf("Subject: ") + "Subject: ".Length;

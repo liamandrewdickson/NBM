@@ -8,6 +8,9 @@ namespace NapierBankMessageFilter.ApplicationLayer
 {
     public class SMS : Message
     {
+        public SMS(string header, string type, string body, string sender) : base(header, type, body, sender) { }
+
+        public SMS() { }
 
         public void ValidatePhoneNumber(string msg)
         {
@@ -19,13 +22,12 @@ namespace NapierBankMessageFilter.ApplicationLayer
 
             if (!string.IsNullOrEmpty(phonenumber))
             {
-                if (!reg.IsMatch(phonenumber))
+                if (reg.IsMatch(phonenumber))
                 {
-                    MessageBox.Show("The entered phone number is not valid, please change it to be a valid phone number.");
-                }
-                else
-                {
-                    MessageBox.Show("The entered phone number is valid, please change it to be a valid phone number.");
+                    if (phonenumber.Length > 14)
+                    {
+                        MessageBox.Show("The entered phone number is not valid, please change it to be a valid phone number.");
+                    }
                 }
             }
             else

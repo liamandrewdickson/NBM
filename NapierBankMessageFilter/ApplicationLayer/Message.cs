@@ -8,22 +8,22 @@ namespace NapierBankMessageFilter.ApplicationLayer
 {
     public class Message
     {
+        private string _header;
         private string _type;
         private string _body;
         private string _sender;
-        private int _limit;
 
+        public string Header { get => _header; set => _header = value; }
         public string Type { get => _type; set => _type = value; }
         public string Body { get => _body; set => _body = value; }
         public string Sender { get => _sender; set => _sender = value; }
-        public int Limit { get => _limit; set => _limit = value; }
-
-        public Message (string type, string body, string sender, int limit)
+        
+        public Message (string header, string type, string body, string sender)
         {
+            Header = header;
             Type = type;
             Body = body;
             Sender = sender;
-            Limit = limit;
         }
        
         public Message () { }

@@ -22,13 +22,18 @@ namespace NapierBankMessageFilter
     public partial class MainWindow : Window
     {
         private string msgType = "";
+        private string msgHeader = "";
         private string msgBody = "";
         Main main = new Main();
+
+        public string MsgType { get => msgType; set => msgType = value; }
+        public string MsgHeader { get => msgHeader; set => msgHeader = value; }
+        public string MsgBody { get => msgBody; set => msgBody = value; }
 
         public MainWindow()
         {
             InitializeComponent();
-
+            main.NBMStart();
         }
 
         /// <summary>
@@ -38,27 +43,29 @@ namespace NapierBankMessageFilter
         {
             if (txtMsgID.Text.Length == txtMsgID.MaxLength)
             {
-                
-                    msgType = main.ValidateMessageType(txtMsgID.Text);
-                    if (msgType == "")
-                    {
-                        txtMsgID.Clear();
-                    }
-                
-                if (!String.IsNullOrEmpty(msgType))
+
+                MsgType = main.ValidateMessageType(txtMsgID.Text);
+                if (MsgType == "")
                 {
-                    txtMsgBody.Text = main.GetMessageBody(msgType);
+                    txtMsgID.Clear();
+                }
+
+                if (!String.IsNullOrEmpty(MsgType))
+                {
+                    txtMsgBody.Text = main.GetMessageBody(MsgType);
                     txtMsgBody.IsEnabled = true;
                     btnSubmit.IsEnabled = true;
                 }
             }
-            
+
         }
 
         private void btnSubmit_Click(object sender, RoutedEventArgs e)
         {
-            msgBody = txtMsgBody.Text;
-            main.ValidateMessageLimit(msgType, msgBody);
+            MsgBody = txtMsgBody.Text;
+            MsgHeader = txtMsgID.Text;
+            main.ValidateMessageLimit(MsgType, MsgBody);
+            main.ValidateMessage(MsgType, MsgBody, MsgHeader, main.GetMessageSender(msgType, msgBody));
         }
     }
 }

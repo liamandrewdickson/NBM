@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NapierBankMessageFilter.DataLayer;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -8,10 +9,17 @@ namespace NapierBankMessageFilter.ApplicationLayer
 {
     public class Main 
     {
+        private Dictionary<string, string> initialisms;
         Email email = new Email();
         Tweet tweet = new Tweet();
         SMS sms = new SMS();
 
+        public Dictionary<string, string> Initialisms { get => initialisms; set => initialisms = value; }
+
+        public void NBMStart()
+        {
+            Initialisms = LoadMessages.LoadTextWords();
+        }
 
         public string ValidateMessageType(string msgID)
         {
@@ -46,6 +54,33 @@ namespace NapierBankMessageFilter.ApplicationLayer
             }
             
             return msgType;
+        }
+
+        public string GetMessageSender(string msgType, string msg)
+        {
+            int pFrom = msg.IndexOf("Sender: ") + "Sender: ".Length;
+            int pTo = msg.LastIndexOf("\nMessage Text: ");
+            string sender = msg.Substring(pFrom, pTo - pFrom);
+
+            if (!string.IsNullOrEmpty(sender))
+            {
+                switch (msgType)
+                {
+                    case "Email":
+                        break;
+                    case "Tweet":
+                        break;
+                    case "SMS":
+                        break;
+                }
+            }
+            else
+            {
+                throw new ArgumentNullException("A Null value was passed to the function, please change the parameter");
+            }
+            
+            return sender;
+
         }
 
         public string GetMessageBody(string msgType)
@@ -104,6 +139,25 @@ namespace NapierBankMessageFilter.ApplicationLayer
             else
             {
                 throw new ArgumentNullException("A Null value was passed to the function, please change the parameter");
+            }
+        }
+
+        public void ValidateMessage(string msgType, string msgBody, string msgHeader, string msgSender)
+        {
+            switch (msgType)
+            {
+                case "Email":
+                    Email sms = new Email(msgHeader, msgType, msgBody, msgSender);
+                    SaveMessages.SerializeMessage(tweet, msgType);
+                    break;
+                case "Tweet":
+                    Tweet tweet = new Tweet(msgHeader, msgType, msgBody, msgSender);
+                    SaveMessages.SerializeMessage(tweet, msgType);
+                    break;
+                case "SMS":
+                    SMS sms = new SMS(msgHeader, msgType, msgBody, msgSender);
+                    SaveMessages.SerializeMessage(tweet, msgType);
+                    break;
             }
         }
 

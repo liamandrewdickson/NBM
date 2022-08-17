@@ -8,6 +8,11 @@ namespace NapierBankMessageFilter.ApplicationLayer
 {
     public class Tweet : Message
     {
+
+        public Tweet(string header,string type, string body, string sender): base(header, type, body, sender) { }
+
+        public Tweet() { }
+
         public void ValidateTweeter(string msg)
         {
             int pFrom = msg.IndexOf("Sender: ") + "Sender: ".Length;
@@ -32,5 +37,6 @@ namespace NapierBankMessageFilter.ApplicationLayer
                 throw new ArgumentNullException("A Null value was passed to the function, please change the parameter");
             }
         }
+
     }
 }
