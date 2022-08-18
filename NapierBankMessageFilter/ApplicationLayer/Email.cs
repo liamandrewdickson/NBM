@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 
 namespace NapierBankMessageFilter.ApplicationLayer
@@ -37,5 +38,45 @@ namespace NapierBankMessageFilter.ApplicationLayer
             }
             return subject;
         }
+
+        ///// <summary>
+        ///// This method takes the body added by the user and returns a list of the URLs detected
+        ///// </summary>
+        ///// <param name="body"></param>
+        ///// <returns>
+        ///// A list of URLs detected
+        ///// </returns>
+        //public List<string> DetectURL(string body)
+        //{
+        //    List<string> list;
+
+        //    Regex rx = new(@"((http|ftp|https|HTTPS|HTTP|FTP):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?)");
+
+        //    MatchCollection matches = rx.Matches(body);
+
+        //    list = matches.Cast<Match>().Select(m => m.Value).ToList();
+
+        //    return list;
+        //}
+
+
+        ///// <summary>
+        ///// This method takes the body added by the user, and a list of URLs to be quarantined and removes the URLs from the body
+        ///// </summary>
+        ///// <param name="body"></param>
+        ///// <param name="QuarantineList"></param>
+        ///// <returns>
+        ///// A new version of body with the URLs replaced with the text "URL Quarantined" in triangle brackets
+        ///// </returns>
+        //public string QuarantineURL(string body, List<string> QuarantineList)
+        //{
+        //    foreach (string URL in QuarantineList)
+        //    {
+        //        body = body.Replace(URL, "<URL Quarantined>");
+        //    }
+
+        //    return body;
+        //}
+
     }
 }

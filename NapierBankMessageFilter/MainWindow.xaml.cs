@@ -38,8 +38,9 @@ namespace NapierBankMessageFilter
         }
 
         /// <summary>
-        /// When the Message ID is filled in, the method checks the message type
+        /// When the Message Header is filled in, the method checks the message type
         /// </summary>
+        /// <param name="sender"></param>
         private void txtMsgID_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (txtMsgID.Text.Length == txtMsgID.MaxLength)
@@ -61,11 +62,14 @@ namespace NapierBankMessageFilter
 
         }
 
+        /// <summary>
+        /// When the submit button is clicked, it will process the message in the text box
+        /// </summary>
+        /// <param name="sender"></param>
         private void btnSubmit_Click(object sender, RoutedEventArgs e)
         {
             Msg = txtMsgBody.Text;
             MsgHeader = txtMsgID.Text;
-            main.ValidateMessageLimit(MsgType, Msg);
             main.ValidateMessage(Msg, MsgType, message.GetMessageText(Msg), MsgHeader, message.GetMessageSender(MsgType, Msg));
         }
     }

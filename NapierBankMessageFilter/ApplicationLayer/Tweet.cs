@@ -8,6 +8,11 @@ namespace NapierBankMessageFilter.ApplicationLayer
 {
     public class Tweet : Message
     {
+        private List<string> _tweetMentions;
+        private List<string> _tweetHashTags;
+
+        public List<string> TweetMentions { get => _tweetMentions; set => _tweetMentions = value; }
+        public List<string> TweetHashTags { get => _tweetHashTags; set => _tweetHashTags = value; }
 
         public Tweet(string header,string type, string body, string sender): base(header, type, body, sender) { }
 
@@ -28,7 +33,7 @@ namespace NapierBankMessageFilter.ApplicationLayer
                 {
                     if (tweeter.Length > 20)
                     {
-                        MessageBox.Show("There are too many characters in the sender of the tweet, please change the subject to fit the character limit of 15 (not including @)");
+                        MessageBox.Show("There are too many characters in the sender of the tweet, please change the sender to fit the character limit of 15 (not including @)");
                     }
                 }
             }
