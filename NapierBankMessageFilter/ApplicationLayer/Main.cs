@@ -75,41 +75,46 @@ namespace NapierBankMessageFilter.ApplicationLayer
         /// </summary>
         /// <param name="msgType"></param>
         /// <param name="msg"></param>
-        public void ValidateMessageLimit(string msgType, string msg)
+        public bool ValidateMessageLimit(string msgType, string msgSender, string msgBody)
         {
+            bool valid = false;
 
-            string[] msgParts;
-            msgParts = msg.Split("Message Text: ");
-            string body = msgParts[1];
-
-            if (!string.IsNullOrEmpty(body))
+            if (!string.IsNullOrEmpty(msgBody))
             {
                 if (msgType == "Email")
                 {
-                    if (body.Length > 1028)
+                    if (msgBody.Length > 1028)
                     {
                         MessageBox.Show("There are too many characters in the body of the message, please change the message text to fit the character limit of 1028");
+                        valid = false;
                     }
+                    else { valid = true; }
                 }
-                else if (msgType == "Tweet")
-                {
-                    tweet.ValidateTweeter(msg);
-                }
-                else if (msgType == "SMS")
-                {
-                    sms.ValidatePhoneNumber(msg);
-                }
-
-                if (body.Length > 140)
+                else if (msgBody.Length > 140)
                 {
                     MessageBox.Show("There are too many characters in the body of the message, please change the message text to fit the character limit of 140");
+                    valid = false;
                 }
+                else
+                {
+                    if (msgType == "Tweet")
+                    {
+                        valid = tweet.ValidateTweeter(msgSender);
+                    }
+                    else if (msgType == "SMS")
+                    {
+                        valid = sms.ValidatePhoneNumber(msgSender);
+                    }
+                }
+
+
 
             }
             else
             {
                 throw new ArgumentNullException("A Null value was passed to the function, please change the parameter");
             }
+            return valid;
         }
 
         /// <summary>
@@ -124,7 +129,7 @@ namespace NapierBankMessageFilter.ApplicationLayer
         {
             string subject = "";
             Message message = new Message();
-
+            bool validLimit = false;
 
             switch (msgType)
             {
@@ -135,21 +140,30 @@ namespace NapierBankMessageFilter.ApplicationLayer
                     {
 
                     }
-                    ValidateMessageLimit(msgType, msg);
                     Email email = new Email(msgHeader, subject, msgType, msgBody, msgSender);
-                    SaveMessages.SerializeMessage(email, msgType);
+                    validLimit = ValidateMessageLimit(msgType, msgSender, msg);
+                    if (validLimit)
+                    {
+                        SaveMessages.SerializeMessage(email, msgType);
+                    }
                     break;
                 case "Tweet":
                     msgBody = message.GetTextSpeak(msgBody, Initialisms);
                     Tweet tweet = new Tweet(msgHeader, msgType, msgBody, msgSender);
-                    ValidateMessageLimit(msgType, msg);
-                    SaveMessages.SerializeMessage(tweet, msgType);
+                    validLimit = ValidateMessageLimit(msgType, msgSender, msgBody);
+                    if (validLimit)
+                    {
+                        SaveMessages.SerializeMessage(tweet, msgType);
+                    }
                     break;
                 case "SMS":
                     msgBody = message.GetTextSpeak(msgBody, Initialisms);
                     SMS sms = new SMS(msgHeader, msgType, msgBody, msgSender);
-                    ValidateMessageLimit(msgType, msg);
-                    SaveMessages.SerializeMessage(sms, msgType);
+                    validLimit = ValidateMessageLimit(msgType, msgSender, msgBody);
+                    if (validLimit)
+                    {
+                        SaveMessages.SerializeMessage(sms, msgType);
+                    }
                     break;
             }
         }

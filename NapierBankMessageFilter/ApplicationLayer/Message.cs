@@ -17,16 +17,16 @@ namespace NapierBankMessageFilter.ApplicationLayer
         public string Type { get => _type; set => _type = value; }
         public string Body { get => _body; set => _body = value; }
         public string Sender { get => _sender; set => _sender = value; }
-        
-        public Message (string header, string type, string body, string sender)
+
+        public Message(string header, string type, string body, string sender)
         {
             Header = header;
             Type = type;
             Body = body;
             Sender = sender;
         }
-       
-        public Message () { }
+
+        public Message() { }
 
         /// <summary>
         /// Sets the initial titles for the text box depending on the message type
@@ -35,7 +35,7 @@ namespace NapierBankMessageFilter.ApplicationLayer
         /// <returns>
         /// The initial body of the message with the filled in titles
         /// </returns>
-        public string GetMessageBody(string msgType)
+        public string SetMessageTitles(string msgType)
         {
             string body = "";
 
@@ -67,15 +67,18 @@ namespace NapierBankMessageFilter.ApplicationLayer
         public string GetMessageSender(string msgType, string msg)
         {
             int pFrom = msg.IndexOf("Sender: ") + "Sender: ".Length;
-            
+            string sender = "";
             int pTo = msg.LastIndexOf("\nMessage Text: ");
-            if (msgType == "Email")
-            {
-                pTo = msg.LastIndexOf("\nSubject: ");
-            }
-            string sender = msg.Substring(pFrom, pTo - pFrom);
 
-            if (string.IsNullOrEmpty(sender))
+            if (!string.IsNullOrEmpty(msg))
+            { 
+                if (msgType == "Email")
+                {
+                    pTo = msg.LastIndexOf("\nSubject: ");
+                }
+                sender = msg.Substring(pFrom, pTo - pFrom);
+            }
+            else
             {
                 throw new ArgumentNullException("A Null value was passed to the function, please change the parameter");
             }
@@ -93,12 +96,15 @@ namespace NapierBankMessageFilter.ApplicationLayer
         /// </returns>
         public string GetMessageText(string msg)
         {
+            string body = "";
 
-            string[] msgParts;
-            msgParts = msg.Split("Message Text: ");
-            string body = msgParts[1];
-
-            if (string.IsNullOrEmpty(body))
+            if (!string.IsNullOrEmpty(msg))
+            {
+                string[] msgParts;
+                msgParts = msg.Split("Message Text: ");
+                body = msgParts[1];
+            }
+            else
             {
                 throw new ArgumentNullException("A Null value was passed to the function, please change the parameter");
             }
@@ -116,9 +122,16 @@ namespace NapierBankMessageFilter.ApplicationLayer
         /// </returns>
         public string GetTextSpeak(string body, Dictionary<string, string> initialisms)
         {
-            foreach (string initial in initialisms.Keys)
+            if (!string.IsNullOrEmpty(body))
             {
-                body = body.Replace(initial, initial + " <" + initialisms[initial] + ">");
+                foreach (string initial in initialisms.Keys)
+                {
+                    body = body.Replace(initial, initial + " <" + initialisms[initial] + ">");
+                }
+            }
+            else
+            {
+                throw new ArgumentNullException("A Null value was passed to the function, please change the parameter");
             }
 
             return body;

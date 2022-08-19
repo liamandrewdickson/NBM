@@ -29,34 +29,65 @@ namespace NapierBankMessageFilterTests
         }
         #endregion
 
-        #region GetMessageBody
-        [TestMethod]
-        public void GetMessageBodyTest()
-        {
-            string msgType = "Email";
-            string eResult = "Sender: \nSubject: \nMessage Text: ";
-            string aResult = main.GetMessageBody(msgType);
 
-            Assert.AreEqual(eResult, aResult);
+        #region ValidateMessageLimitTest
+        [TestMethod]
+        public void ValidateMessageLimitTest()
+        {
+            string msgSender = "liam.dickson@liam.co.uk";
+            string[] msgType = { "Email","Tweet","SMS" };
+            string msgBody = "This is a Test";
+            foreach (string t in msgType)
+            {
+                switch (t) 
+                {
+                    case "Tweet":
+                        msgSender = "@Liam";
+                        break;
+                    case "SMS":
+                        msgSender = "07884969094";
+                        break;
+                }
+
+                bool aResult = main.ValidateMessageLimit(t, msgSender, msgBody);
+                Assert.IsTrue(aResult);
+            }
+           
         }
 
         [TestMethod]
-        public void ValidateMessageBodyNullTest()
+        public void ValidateLimitTest()
         {
-            string msgType = "";
+            string msgSender = "liam.dickson@liam.co.uk";
+            string[] msgType = { "Email", "Tweet", "SMS" };
+            string msgBody = "------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------";
+            int p;
+            foreach (string t in msgType)
+            {
+                switch (t)
+                {
+                    case "Tweet":
+                        msgSender = "@Liam";
+                        break;
+                    case "SMS":
+                        msgSender = "07884969094";
+                        break;
+                }
+          
+                bool aResult = main.ValidateMessageLimit(t, msgSender, msgBody);
+                Assert.IsFalse(aResult);
+            }
 
-            Assert.ThrowsException<ArgumentNullException>(() => main.GetMessageBody(msgType));
         }
-        #endregion
 
-        #region SetMessageLimit
         [TestMethod]
         public void ValidateMessageLimitNullTest()
         {
             string msgType = "Email";
-            string msg = "Sender: liam.dickson@liam.co.uk \nSubject: This is a test \nMessage Text: ";
+            string msgSender = "liam.dickson@liam.co.uk";
+            string msgBody = "";
 
-            Assert.ThrowsException<ArgumentNullException>(() => main.ValidateMessageLimit(msgType, msg));
+            Assert.ThrowsException<ArgumentNullException>(() => main.ValidateMessageLimit(msgType, msgSender, msgBody));
         }
         #endregion
     }

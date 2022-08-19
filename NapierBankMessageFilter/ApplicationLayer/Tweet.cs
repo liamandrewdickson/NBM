@@ -18,14 +18,10 @@ namespace NapierBankMessageFilter.ApplicationLayer
 
         public Tweet() { }
 
-        public void ValidateTweeter(string msg)
+        public bool ValidateTweeter(string tweeter)
         {
-            int pFrom = msg.IndexOf("Sender: ") + "Sender: ".Length;
-            int pTo = msg.LastIndexOf("\nMessage Text: ");
-            string tweeter = msg.Substring(pFrom, pTo - pFrom);
 
             Regex reg = new Regex(@"^(@){1}[1-9a-zA-Z]{15}");
-
 
             if (!string.IsNullOrEmpty(tweeter))
             {
@@ -34,6 +30,7 @@ namespace NapierBankMessageFilter.ApplicationLayer
                     if (tweeter.Length > 20)
                     {
                         MessageBox.Show("There are too many characters in the sender of the tweet, please change the sender to fit the character limit of 15 (not including @)");
+                        return false;
                     }
                 }
             }
@@ -41,6 +38,7 @@ namespace NapierBankMessageFilter.ApplicationLayer
             {
                 throw new ArgumentNullException("A Null value was passed to the function, please change the parameter");
             }
+            return true;
         }
 
     }

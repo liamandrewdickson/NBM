@@ -54,7 +54,7 @@ namespace NapierBankMessageFilter
 
                 if (!String.IsNullOrEmpty(MsgType))
                 {
-                    txtMsgBody.Text = message.GetMessageBody(MsgType);
+                    txtMsgBody.Text = message.SetMessageTitles(MsgType);
                     txtMsgBody.IsEnabled = true;
                     btnSubmit.IsEnabled = true;
                 }
@@ -71,6 +71,8 @@ namespace NapierBankMessageFilter
             Msg = txtMsgBody.Text;
             MsgHeader = txtMsgID.Text;
             main.ValidateMessage(Msg, MsgType, message.GetMessageText(Msg), MsgHeader, message.GetMessageSender(MsgType, Msg));
+            txtMsgID.Clear();
+            txtMsgBody.Clear();
         }
     }
 }

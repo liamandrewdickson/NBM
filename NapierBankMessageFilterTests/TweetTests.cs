@@ -13,9 +13,9 @@ namespace NapierBankMessageFilterTests
         [TestMethod]
         public void ValidateTweeterNullTest()
         {
-            string msg = "Sender: \nMessage Text: This is a test";
+            string tweeter = "";
 
-            Assert.ThrowsException<ArgumentNullException>(() => tweet.ValidateTweeter(msg));
+            Assert.ThrowsException<ArgumentNullException>(() => tweet.ValidateTweeter(tweeter));
         }
         #endregion
     }
