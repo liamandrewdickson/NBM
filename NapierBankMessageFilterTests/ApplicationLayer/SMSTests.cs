@@ -9,6 +9,25 @@ namespace NapierBankMessageFilterTests
     {
         SMS sms = new SMS();
 
+        #region GenerateSMS
+        [TestMethod]
+        public void GenerateSMSTest()
+        {
+            string msgHeader = "S123456789";
+            string msgType = "SMS";
+            string msgBody = "This is a test";
+            string msgSender = "07884969094";
+            SMS eResult = new SMS("S123456789", "SMS", "This is a test", "07884969094");
+
+            SMS aResult = new SMS(msgHeader, msgType, msgBody, msgSender);
+
+            Assert.AreEqual(eResult.Header, aResult.Header);
+            Assert.AreEqual(eResult.Type, aResult.Type);
+            Assert.AreEqual(eResult.Body, aResult.Body);
+            Assert.AreEqual(eResult.Sender, aResult.Sender);
+        }
+        #endregion
+
         #region ValidatePhoneNumber
         [TestMethod]
         public void ValidatePhoneNumberTest()

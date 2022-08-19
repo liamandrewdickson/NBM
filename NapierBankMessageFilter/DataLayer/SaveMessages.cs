@@ -12,13 +12,13 @@ namespace NapierBankMessageFilter.DataLayer
     public class SaveMessages
     {
 
-        public static void SerializeMessage(Message message, string msgType)
+        public static void SerializeMessage(Message message)
         {
             string fileName = message.Header + ".json";
             string location = AppDomain.CurrentDomain.BaseDirectory;
             string output = "";
 
-            switch (msgType)
+            switch (message.Type)
             {
                 case "Email":
                     Email email = (Email)message;

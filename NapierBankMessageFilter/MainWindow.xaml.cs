@@ -70,9 +70,17 @@ namespace NapierBankMessageFilter
         {
             Msg = txtMsgBody.Text;
             MsgHeader = txtMsgID.Text;
-            main.ValidateMessage(Msg, MsgType, message.GetMessageText(Msg), MsgHeader, message.GetMessageSender(MsgType, Msg));
-            txtMsgID.Clear();
-            txtMsgBody.Clear();
+
+            if (!String.IsNullOrEmpty(Msg) || !String.IsNullOrEmpty(MsgHeader))
+            {
+                main.ValidateMessage(Msg, MsgType, message.GetMessageText(Msg), MsgHeader, message.GetMessageSender(MsgType, Msg));
+                txtMsgID.Clear();
+                txtMsgBody.Clear();
+            }
+            else
+            {
+                throw new ArgumentNullException("A Null value was passed to the function, please change the parameter");
+            }
         }
     }
 }

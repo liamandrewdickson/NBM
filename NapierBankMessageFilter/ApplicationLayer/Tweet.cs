@@ -21,18 +21,19 @@ namespace NapierBankMessageFilter.ApplicationLayer
         public bool ValidateTweeter(string tweeter)
         {
 
-            Regex reg = new Regex(@"^(@){1}[1-9a-zA-Z]{15}");
+            Regex reg = new Regex(@"^(@){1}[1-9a-zA-Z]{1,15}");
 
             if (!string.IsNullOrEmpty(tweeter))
             {
                 if (reg.IsMatch(tweeter))
                 {
-                    if (tweeter.Length > 20)
+                    if (tweeter.Length > 16)
                     {
                         MessageBox.Show("There are too many characters in the sender of the tweet, please change the sender to fit the character limit of 15 (not including @)");
                         return false;
                     }
                 }
+                else return false;
             }
             else
             {

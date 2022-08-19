@@ -10,6 +10,12 @@ namespace NapierBankMessageFilter.DataLayer
 {
     public class LoadMessages
     {
+        /// <summary>
+        /// Reads in the text words and initialisms
+        /// </summary>
+        /// <returns>
+        /// A Dictionary of initialisms and expanded phrases
+        /// </returns>
         public static Dictionary<string, string> LoadTextWords()
         {
             Dictionary<string, string> initialisms = new Dictionary<string, string>();
@@ -33,6 +39,9 @@ namespace NapierBankMessageFilter.DataLayer
             return initialisms;
         }
 
+        /// <summary>
+        /// Creates the file locations if they do not exist
+        /// </summary>
         public static void InitialiseLocations()
         {
             string[] locations = new string[] { @"..\..\..\Messages\Tweet", @"..\..\..\Messages\Email", @"..\..\..\Messages\SMS" };
@@ -43,6 +52,13 @@ namespace NapierBankMessageFilter.DataLayer
             }
         }
 
+        /// <summary>
+        /// Deserializes previous Messages, Emails, SMSes and Tweets
+        /// </summary>
+        /// <param name="msgType"></param>
+        /// <returns>
+        /// A List of deserialized Messages
+        /// </returns>
         public static List<Message> DeserializeMessages(string msgType)
         {
             string location = AppDomain.CurrentDomain.BaseDirectory;

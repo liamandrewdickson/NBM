@@ -19,6 +19,13 @@ namespace NapierBankMessageFilter.ApplicationLayer
 
         public Email() { }
 
+        /// <summary>
+        /// Splits the messsage to get the subject for the email
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <returns>
+        /// The subject for the email
+        /// </returns>
         public string GetSubject(string msg)
         {
             int pFrom = msg.IndexOf("Subject: ") + "Subject: ".Length;
@@ -30,6 +37,7 @@ namespace NapierBankMessageFilter.ApplicationLayer
                 if (subject.Length > 20)
                 {
                     MessageBox.Show("There are too many characters in the subject of the email, please change the subject to fit the character limit of 20");
+                    subject = "";
                 }
             }
             else

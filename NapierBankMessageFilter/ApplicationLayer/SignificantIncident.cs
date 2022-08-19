@@ -33,41 +33,48 @@ namespace NapierBankMessageFilter.ApplicationLayer
 
         public string GetIncidentType(string subject)
         {
-            switch (subject)
+            if (!string.IsNullOrEmpty(subject))
             {
-                case "Theft":
-                    IncidentType = "Theft";
-                    break;
-                case "Staff Attack":
-                    IncidentType = "Staff Attack";
-                    break;
-                case "ATM Theft":
-                    IncidentType = "ATM Theft";
-                    break;
-                case "Raid":
-                    IncidentType = "Raid";
-                    break;
-                case "Customer Attack":
-                    IncidentType = "Customer Attack";
-                    break;
-                case "Staff Abuse":
-                    IncidentType = "Staff Abuse";
-                    break;
-                case "Bomb Threat":
-                    IncidentType = "Bomb Threat";
-                    break;
-                case "Terrorism":
-                    IncidentType = "Terrorism";
-                    break;
-                case "Suspicious Incident":
-                    IncidentType = "Suspicious Incident";
-                    break;
-                case "Intelligence":
-                    IncidentType = "Intelligence";
-                    break;
-                case "Cash Loss":
-                    IncidentType = "Cash Loss";
-                    break;
+                switch (subject)
+                {
+                    case "Theft":
+                        IncidentType = "Theft";
+                        break;
+                    case "Staff Attack":
+                        IncidentType = "Staff Attack";
+                        break;
+                    case "ATM Theft":
+                        IncidentType = "ATM Theft";
+                        break;
+                    case "Raid":
+                        IncidentType = "Raid";
+                        break;
+                    case "Customer Attack":
+                        IncidentType = "Customer Attack";
+                        break;
+                    case "Staff Abuse":
+                        IncidentType = "Staff Abuse";
+                        break;
+                    case "Bomb Threat":
+                        IncidentType = "Bomb Threat";
+                        break;
+                    case "Terrorism":
+                        IncidentType = "Terrorism";
+                        break;
+                    case "Suspicious Incident":
+                        IncidentType = "Suspicious Incident";
+                        break;
+                    case "Intelligence":
+                        IncidentType = "Intelligence";
+                        break;
+                    case "Cash Loss":
+                        IncidentType = "Cash Loss";
+                        break;
+                }
+            }
+            else
+            {
+                throw new ArgumentNullException("A Null value was passed to the function, please change the parameter");
             }
 
             return IncidentType;

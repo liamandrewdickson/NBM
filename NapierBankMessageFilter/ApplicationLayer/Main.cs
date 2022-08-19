@@ -60,6 +60,7 @@ namespace NapierBankMessageFilter.ApplicationLayer
                 else
                 {
                     MessageBox.Show("Please input an ID with the message type of S, E or T at the start followed by 9 digits");
+                    msgType = "";
                 }
             }
             else
@@ -131,40 +132,48 @@ namespace NapierBankMessageFilter.ApplicationLayer
             Message message = new Message();
             bool validLimit = false;
 
-            switch (msgType)
+            if (!string.IsNullOrEmpty(msg) || !string.IsNullOrEmpty(msgType) || !string.IsNullOrEmpty(msgBody) || !string.IsNullOrEmpty(msgHeader) || !string.IsNullOrEmpty(msgSender))
             {
-                case "Email":
-                    Email e = new Email();
-                    subject = e.GetSubject(msg);
-                    if (subject.Contains("SIR")) 
-                    {
 
-                    }
-                    Email email = new Email(msgHeader, subject, msgType, msgBody, msgSender);
-                    validLimit = ValidateMessageLimit(msgType, msgSender, msg);
-                    if (validLimit)
-                    {
-                        SaveMessages.SerializeMessage(email, msgType);
-                    }
-                    break;
-                case "Tweet":
-                    msgBody = message.GetTextSpeak(msgBody, Initialisms);
-                    Tweet tweet = new Tweet(msgHeader, msgType, msgBody, msgSender);
-                    validLimit = ValidateMessageLimit(msgType, msgSender, msgBody);
-                    if (validLimit)
-                    {
-                        SaveMessages.SerializeMessage(tweet, msgType);
-                    }
-                    break;
-                case "SMS":
-                    msgBody = message.GetTextSpeak(msgBody, Initialisms);
-                    SMS sms = new SMS(msgHeader, msgType, msgBody, msgSender);
-                    validLimit = ValidateMessageLimit(msgType, msgSender, msgBody);
-                    if (validLimit)
-                    {
-                        SaveMessages.SerializeMessage(sms, msgType);
-                    }
-                    break;
+                switch (msgType)
+                {
+                    case "Email":
+                        Email e = new Email();
+                        subject = e.GetSubject(msg);
+                        if (subject.Contains("SIR"))
+                        {
+
+                        }
+                        Email email = new Email(msgHeader, subject, msgType, msgBody, msgSender);
+                        validLimit = ValidateMessageLimit(msgType, msgSender, msg);
+                        if (validLimit)
+                        {
+                            SaveMessages.SerializeMessage(email);
+                        }
+                        break;
+                    case "Tweet":
+                        msgBody = message.GetTextSpeak(msgBody, Initialisms);
+                        Tweet tweet = new Tweet(msgHeader, msgType, msgBody, msgSender);
+                        validLimit = ValidateMessageLimit(msgType, msgSender, msgBody);
+                        if (validLimit)
+                        {
+                            SaveMessages.SerializeMessage(tweet);
+                        }
+                        break;
+                    case "SMS":
+                        msgBody = message.GetTextSpeak(msgBody, Initialisms);
+                        SMS sms = new SMS(msgHeader, msgType, msgBody, msgSender);
+                        validLimit = ValidateMessageLimit(msgType, msgSender, msgBody);
+                        if (validLimit)
+                        {
+                            SaveMessages.SerializeMessage(sms);
+                        }
+                        break;
+                }
+            }
+            else
+            {
+                throw new ArgumentNullException("A Null value was passed to the function, please change the parameter");
             }
         }
 

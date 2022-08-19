@@ -13,12 +13,29 @@ namespace NapierBankMessageFilterTests
         [TestMethod]
         public void ValidateMessageTypeTest()
         {
-            string msgID = "E123456789";
-            string eResult = "Email";
-            string aResult = main.ValidateMessageType(msgID);
+            string msgHeader = "E123456789";
+            string[] eResult = { "Email", "Tweet", "SMS", "" };
+            foreach (string e in eResult)
+            {
+                switch (e)
+                {
+                    case "Tweet":
+                        msgHeader = "T123456789";
+                        break;
+                    case "SMS":
+                        msgHeader = "S123456789";
+                        break;
+                    case "":
+                        msgHeader = "P123456789";
+                        break;
+                }
 
-            Assert.AreEqual(eResult, aResult);
+                string aResult = main.ValidateMessageType(msgHeader);
+                Assert.AreEqual(e, aResult);
+            }
+
         }
+
 
         [TestMethod]
         public void ValidateMessageTypeNullTest()
@@ -29,8 +46,7 @@ namespace NapierBankMessageFilterTests
         }
         #endregion
 
-
-        #region ValidateMessageLimitTest
+        #region ValidateMessageLimit
         [TestMethod]
         public void ValidateMessageLimitTest()
         {
@@ -61,7 +77,7 @@ namespace NapierBankMessageFilterTests
             string msgSender = "liam.dickson@liam.co.uk";
             string[] msgType = { "Email", "Tweet", "SMS" };
             string msgBody = "------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------";
-            int p;
+
             foreach (string t in msgType)
             {
                 switch (t)
@@ -88,6 +104,20 @@ namespace NapierBankMessageFilterTests
             string msgBody = "";
 
             Assert.ThrowsException<ArgumentNullException>(() => main.ValidateMessageLimit(msgType, msgSender, msgBody));
+        }
+        #endregion
+
+        #region ValidateMessage
+        [TestMethod]
+        public void ValidateMessageNullTest()
+        {
+            string msg = "";
+            string msgType = "";
+            string msgBody = "";
+            string msgHeader = "";
+            string msgSender = "";
+
+            Assert.ThrowsException<ArgumentNullException>(() => main.ValidateMessage(msg, msgType, msgBody, msgHeader, msgSender));
         }
         #endregion
     }
