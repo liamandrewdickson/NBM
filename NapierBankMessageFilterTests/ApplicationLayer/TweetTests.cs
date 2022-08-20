@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NapierBankMessageFilter.ApplicationLayer;
 using System;
+using System.Collections.Generic;
 
 namespace NapierBankMessageFilterTests
 {
@@ -17,9 +18,14 @@ namespace NapierBankMessageFilterTests
             string msgType = "Tweet";
             string msgBody = "This is a test";
             string msgSender = "@Liam";
-            Tweet eResult = new Tweet("T123456789", "Tweet", "This is a test", "@Liam");
+            List<string> mentions = new List<string>();
+            List<string> hashtags = new List<string>();
+            mentions.Add("@John");
+            hashtags.Add("#WhatsUp");
 
-            Tweet aResult = new Tweet(msgHeader, msgType, msgBody, msgSender);
+            Tweet eResult = new Tweet("T123456789", "Tweet", "This is a test", "@Liam", mentions, hashtags);
+
+            Tweet aResult = new Tweet(msgHeader, msgType, msgBody, msgSender, mentions, hashtags);
 
             Assert.AreEqual(eResult.Header, aResult.Header);
             Assert.AreEqual(eResult.Type, aResult.Type);

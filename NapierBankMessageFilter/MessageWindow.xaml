@@ -20,11 +20,11 @@
             </TabItem>
             <TabItem Header="Emails">
                 <Grid Background="#FFE5E5E5">
-                    <Label Content="Trending Hashtags" Margin="12,55,0,0" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Width="147" />
+                    <Label Content="Quarantined" Margin="12,55,0,0" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Width="147" />
                     <TextBox x:Name="txtQuarantined" TextWrapping="Wrap" IsEnabled="False" Margin="10,83,652,10"/>
-                    <Label Content="Tweets" HorizontalAlignment="Left" Height="28" Margin="302,55,0,0" VerticalAlignment="Top" Width="126" />
-                    <TextBox x:Name="txtEmails" HorizontalAlignment="Right" TextWrapping="Wrap" Width="290" IsEnabled="False" Margin="302,83,302,10"/>
-                    <Label Content="Mentions" Margin="652,55,0,0" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Width="102"/>
+                    <Label Content="Emails" HorizontalAlignment="Left" Height="28" Margin="302,55,0,0" VerticalAlignment="Top" Width="126" />
+                    <TextBox x:Name="txtEmails" TextWrapping="Wrap" IsEnabled="False" Margin="302,83,302,10"/>
+                    <Label Content="Significant Incidents" Margin="652,55,0,0" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Width="146"/>
                     <TextBox x:Name="txtSignificantIncidents" TextWrapping="Wrap" IsEnabled="False" Margin="652,83,10,10" />
                 </Grid>
             </TabItem>

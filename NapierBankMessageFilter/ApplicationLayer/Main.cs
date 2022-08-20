@@ -18,6 +18,7 @@ namespace NapierBankMessageFilter.ApplicationLayer
         private List<Message> _smses;
         private List<string> _tweetMentions;
         private List<string> _tweetHashTags;
+        private List<string> _quarantinedURLs;
         Email email = new Email();
         Tweet tweet = new Tweet();
         SMS sms = new SMS();
@@ -32,8 +33,9 @@ namespace NapierBankMessageFilter.ApplicationLayer
 
         public List<string> TweetMentions { get => _tweetMentions; set => _tweetMentions = value; }
         public List<string> TweetHashTags { get => _tweetHashTags; set => _tweetHashTags = value; }
+        public List<string> QuarantinedURLs { get => _quarantinedURLs; set => _quarantinedURLs = value; }
 
-        
+
         /// <summary>
         /// Runs when the program starts, it loads in messages, and reads the textwords into the program
         /// </summary>
@@ -52,6 +54,7 @@ namespace NapierBankMessageFilter.ApplicationLayer
             LoadMessages.DeserializeMessages("SignificantIncident", SignificantIncidents);
 
             SortAndType = SignificantIncident.GetSignificantIncidents(SignificantIncidents);
+            QuarantinedURLs = Email.CollectURLs(Emails);
             TweetMentions = Tweet.CollectMentions(Tweets);
             DictTweetHashTags = Tweet.CollectHashtags(Tweets);
         }
@@ -169,6 +172,8 @@ namespace NapierBankMessageFilter.ApplicationLayer
                     case "Email":
                         Email e = new Email();
                         subject = e.GetSubject(msg);
+                        QuarantinedURLs = e.CheckURLs(msgBody);
+                        msgBody = e.Quarantine(msgBody, QuarantinedURLs);
                         if (subject.Contains("SIR"))
                         {
 
@@ -179,7 +184,7 @@ namespace NapierBankMessageFilter.ApplicationLayer
                             {
                                 string incidentType = sI.GetIncidentType(msgBody);
 
-                                SignificantIncident significantIncident = new SignificantIncident(sortCode, incidentType, msgHeader, subject, msgType, msgBody, msgSender);
+                                SignificantIncident significantIncident = new SignificantIncident(sortCode, incidentType, msgHeader, subject, msgType, msgBody, msgSender, QuarantinedURLs);
                                 validLimit = ValidateMessageLimit(msgType, msgSender, msg);
                                 if (validLimit)
                                 {
@@ -193,7 +198,7 @@ namespace NapierBankMessageFilter.ApplicationLayer
                         }
                         else
                         {
-                            Email email = new Email(msgHeader, subject, msgType, msgBody, msgSender);
+                            Email email = new Email(msgHeader, subject, msgType, msgBody, msgSender, QuarantinedURLs);
                             validLimit = ValidateMessageLimit(msgType, msgSender, msg);
                             if (validLimit)
                             {
@@ -226,6 +231,7 @@ namespace NapierBankMessageFilter.ApplicationLayer
                         if (validLimit)
                         {
                             SaveMessages.SerializeMessage(sms);
+                            SMSes = LoadMessages.DeserializeMessages("SMS", SMSes);
                             submitted = true;
                         }
                         break;

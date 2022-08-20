@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace NapierBankMessageFilter.ApplicationLayer
         public string SortCode { get => _sortCode; set => _sortCode = value; }
         public string IncidentType { get => _significantIncidentType; set => _significantIncidentType = value; }
 
-        public SignificantIncident(string sortCode, string incidentType, string header, string subject, string type, string body, string sender) : base(header, subject, type, body, sender)
+        public SignificantIncident(string sortCode, string incidentType, string header, string subject, string type, string body, string sender, List<string> urls) : base(header, subject, type, body, sender, urls)
         {
             SortCode = sortCode;
             IncidentType = incidentType;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -9,12 +10,15 @@ namespace NapierBankMessageFilter.ApplicationLayer
     public class Email : Message
     {
         private string _subject;
+        private List<string> _urls;
 
         public string Subject { get => _subject; set => _subject = value; }
+        public List<string> URLs { get => _urls; set => _urls = value; }
 
-        public Email(string header, string subject, string type, string body, string sender) : base(header, type, body, sender) 
+        public Email(string header, string subject, string type, string body, string sender, List<string> urls) : base(header, type, body, sender) 
         { 
             Subject = subject;
+            URLs = urls;
         }
 
         public Email() { }
@@ -47,44 +51,71 @@ namespace NapierBankMessageFilter.ApplicationLayer
             return subject;
         }
 
-        ///// <summary>
-        ///// This method takes the body added by the user and returns a list of the URLs detected
-        ///// </summary>
-        ///// <param name="body"></param>
-        ///// <returns>
-        ///// A list of URLs detected
-        ///// </returns>
-        //public List<string> DetectURL(string body)
-        //{
-        //    List<string> list;
+        /// <summary>
+        /// Checks the body of the Email for URLs
+        /// </summary>
+        /// <param name="body"></param>
+        /// <returns>
+        /// A list of URLs
+        /// </returns>
+        public List<string> CheckURLs(string body)
+        {
+            List<string> list = new List<string>();
+            Regex reg = new(@"((http|ftp|https|HTTPS|HTTP|FTP):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?)");
+            MatchCollection matches = reg.Matches(body);
 
-        //    Regex rx = new(@"((http|ftp|https|HTTPS|HTTP|FTP):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?)");
+            list = matches.Cast<Match>().Select(m => m.Value).ToList();
 
-        //    MatchCollection matches = rx.Matches(body);
-
-        //    list = matches.Cast<Match>().Select(m => m.Value).ToList();
-
-        //    return list;
-        //}
+            return list;
+        }
 
 
-        ///// <summary>
-        ///// This method takes the body added by the user, and a list of URLs to be quarantined and removes the URLs from the body
-        ///// </summary>
-        ///// <param name="body"></param>
-        ///// <param name="QuarantineList"></param>
-        ///// <returns>
-        ///// A new version of body with the URLs replaced with the text "URL Quarantined" in triangle brackets
-        ///// </returns>
-        //public string QuarantineURL(string body, List<string> QuarantineList)
-        //{
-        //    foreach (string URL in QuarantineList)
-        //    {
-        //        body = body.Replace(URL, "<URL Quarantined>");
-        //    }
+        /// <summary>
+        /// This method takes the body added by the user, and a list of URLs to be quarantined and removes the URLs from the body
+        /// </summary>
+        /// <param name="body"></param>
+        /// <param name="QuarantineList"></param>
+        /// <returns>
+        /// A new version of body with the URLs replaced with the text "URL Quarantined" in triangle brackets
+        /// </returns>
+        public string Quarantine(string body, List<string> QuarantineURLs)
+        {
+            foreach (string url in QuarantineURLs)
+            {
+                body = body.Replace(url, "<URL Quarantined>");
+            }
 
-        //    return body;
-        //}
+            return body;
+        }
+
+
+        /// <summary>
+        /// This method takes a list of tweets and collates the mentions together
+        /// </summary>
+        /// <param name="emails"></param>
+        /// <returns>
+        /// A string list of mentions
+        /// </returns>
+        public static List<string> CollectURLs(List<Message> emails)
+        {
+            List<string> list = new List<string>();
+
+            foreach (Message message in emails)
+            {
+                Email email = (Email)message;
+
+                if (email.URLs != null)
+                {
+                    foreach (string url in email.URLs)
+                    {
+                        list.Add(url);
+                    }
+                }
+
+            }
+
+            return list;
+        }
 
     }
 }

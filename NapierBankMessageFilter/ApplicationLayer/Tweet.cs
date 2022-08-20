@@ -104,10 +104,15 @@ namespace NapierBankMessageFilter.ApplicationLayer
             foreach (Message message in tweets)
             {
                 Tweet tweet = (Tweet)message;
-                foreach (string ment in tweet.TweetMentions)
+
+                if (tweet.TweetMentions != null)
                 {
-                    list.Add(ment);
+                    foreach (string ment in tweet.TweetMentions)
+                    {
+                        list.Add(ment);
+                    }
                 }
+                
             }
 
             return list;
@@ -128,9 +133,12 @@ namespace NapierBankMessageFilter.ApplicationLayer
             foreach (Message message in tweets)
             {
                 Tweet tweet = (Tweet)message;
-                foreach (string hash in tweet.TweetHashTags)
+                if (tweet.TweetHashTags != null)
                 {
-                    list.Add(hash);
+                    foreach (string hash in tweet.TweetHashTags)
+                    {
+                        list.Add(hash);
+                    }
                 }
 
             }

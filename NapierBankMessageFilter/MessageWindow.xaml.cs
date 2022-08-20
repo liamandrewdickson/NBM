@@ -49,6 +49,7 @@ namespace NapierBankMessageFilter
             txtSignificantIncidents.Text = String.Join(Environment.NewLine, main.SortAndType);
             txtTrendingHastags.Text = String.Join(Environment.NewLine, main.DictTweetHashTags);
             txtMentions.Text = String.Join(Environment.NewLine, main.TweetMentions);
+            txtQuarantined.Text = String.Join(Environment.NewLine, main.QuarantinedURLs);
         }
 
         

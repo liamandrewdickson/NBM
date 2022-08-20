@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NapierBankMessageFilter.ApplicationLayer;
 using System;
+using System.Security.Cryptography;
 
 namespace NapierBankMessageFilterTests
 {
@@ -118,9 +119,13 @@ namespace NapierBankMessageFilterTests
         [TestMethod]
         public void ValidateSignificantIncidentTest()
         {
-            string msg = "Sender: liam.dickson@liam.co.uk\nSubject: SIR 12/12/12\nMessage Text: 12-34-56 Theft I was robbed";
+            Random rnd = new Random();
+            int num = rnd.Next(10, 99);
+            int num2 = rnd.Next(10, 99);
+            int num3 = rnd.Next(10, 99);
+            string msg = $"Sender: liam.dickson@liam.co.uk\nSubject: SIR 12/12/12\nMessage Text: {num}-{num2}-{num3} Theft I was robbed";
             string msgType = "Email";
-            string msgBody = "12-34-56 Theft I was robbed";
+            string msgBody = $"{num}-{num2}-{num3} Theft I was robbed";
             string msgHeader = "E123456789";
             string msgSender = "liam.dickson@bsw.co.uk";
 

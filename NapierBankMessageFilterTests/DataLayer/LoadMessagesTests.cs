@@ -26,6 +26,13 @@ namespace NapierBankMessageFilterTests
         {
             LoadMessages.InitialiseLocations();
             Message message = new Message("S123456789", "SMS", "This is a test", "07884969094");
+            List<string> mentions = new List<string>();
+            List<string> hashtags = new List<string>();
+            List<string> urls = new List<string>();
+
+            mentions.Add("@John");
+            hashtags.Add("#WhatsUp");
+            urls.Add("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
             string[] msgType = { "SMS", "Email", "Tweet" };
 
             foreach (string type in msgType)
@@ -33,15 +40,16 @@ namespace NapierBankMessageFilterTests
                 switch (type)
                 {
                     case "Tweet":
-                        message = new Message("T123456789", "Tweet", "This is a test", "@Liam");
+                        message = new Tweet("T123456789", "Tweet", "This is a test", "@Liam", mentions, hashtags);
                         break;
                     case "Email":
-                        message = new Email("E123456789", "Hello Subject", "Email", "This is a test", "liam.dickson@liam.co.uk");
+                        message = new Email("E123456789", "Hello Subject", "Email", "This is a test", "liam.dickson@liam.co.uk", urls);
                         break;
                 }
                 SaveMessages.SerializeMessage(message);
+                List<Message> list = new List<Message>();
 
-                List<Message> list = LoadMessages.DeserializeMessages(type);
+                list = LoadMessages.DeserializeMessages(type, list);
                 foreach (Message t in list)
                 {
                     Assert.AreEqual(message.Header, t.Header);

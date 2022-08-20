@@ -63,7 +63,6 @@ namespace NapierBankMessageFilter.DataLayer
         {
             string location = AppDomain.CurrentDomain.BaseDirectory;
             string contents = "";
-            Message deserializedMsg;
             Email deserializedEmail;
             SignificantIncident deserializedSI;
             Tweet deserializedTweet;
@@ -90,26 +89,26 @@ namespace NapierBankMessageFilter.DataLayer
                 foreach (string file in Directory.EnumerateFiles(location, "*.json"))
                 {
                     contents = File.ReadAllText(file);
-                    if (msgType == "Email")
+                    switch (msgType)
                     {
-                        deserializedEmail = JsonSerializer.Deserialize<Email>(contents);
-                        messages.Add(deserializedEmail);
+                        case "Email":
+                            deserializedEmail = JsonSerializer.Deserialize<Email>(contents);
+                            messages.Add(deserializedEmail);
+                            break;
+                        case "Tweet":
+                            deserializedTweet = JsonSerializer.Deserialize<Tweet>(contents);
+                            messages.Add(deserializedTweet);
+                            break;
+                        case "SMS":
+                            deserializedSMS = JsonSerializer.Deserialize<SMS>(contents);
+                            messages.Add(deserializedSMS);
+                            break;
+                        case "SignificantIncident":
+                            deserializedSI = JsonSerializer.Deserialize<SignificantIncident>(contents);
+                            messages.Add(deserializedSI);
+                            break;
                     }
-                    else if (msgType == "SignificantIncident")
-                    {
-                        deserializedSI = JsonSerializer.Deserialize<SignificantIncident>(contents);
-                        messages.Add(deserializedSI);
-                    }
-                    else if (msgType == "Tweet")
-                    {
-                        deserializedTweet = JsonSerializer.Deserialize<Tweet>(contents);
-                        messages.Add(deserializedTweet);
-                    }
-                    else
-                    {
-                        deserializedMsg = JsonSerializer.Deserialize<Message>(contents);
-                        messages.Add(deserializedMsg);
-                    } 
+
                 }
             }
             
