@@ -11,27 +11,27 @@
             <TabItem Header="Tweets">
                 <Grid Background="#FFE5E5E5">
                     <Label Content="Trending Hashtags" Margin="12,55,0,0" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Width="147" />
-                    <TextBox x:Name="txtTrendingHastags" TextWrapping="Wrap" IsEnabled="False" Margin="10,83,652,10"/>
+                    <TextBox x:Name="txtTrendingHastags" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="10,83,652,10"/>
                     <Label Content="Tweets" HorizontalAlignment="Left" Height="28" Margin="302,55,0,0" VerticalAlignment="Top" Width="126" />
-                    <TextBox x:Name="txtTweets" TextWrapping="Wrap" IsEnabled="False" Margin="302,83,302,10" />
+                    <TextBox x:Name="txtTweets" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="302,83,302,10" />
                     <Label Content="Mentions" Margin="652,55,0,0" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Width="102"/>
-                    <TextBox x:Name="txtMentions"  TextWrapping="Wrap" IsEnabled="False" Margin="652,83,10,10"/>
+                    <TextBox x:Name="txtMentions" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="652,83,10,10"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Emails">
                 <Grid Background="#FFE5E5E5">
                     <Label Content="Quarantined" Margin="12,55,0,0" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Width="147" />
-                    <TextBox x:Name="txtQuarantined" TextWrapping="Wrap" IsEnabled="False" Margin="10,83,652,10"/>
-                    <Label Content="Emails" HorizontalAlignment="Left" Height="28" Margin="302,55,0,0" VerticalAlignment="Top" Width="126" />
-                    <TextBox x:Name="txtEmails" TextWrapping="Wrap" IsEnabled="False" Margin="302,83,302,10"/>
+                    <TextBox x:Name="txtQuarantined" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="10,83,652,10"/>
+                    <Label Content="Emails" HorizontalAlignment="Left" Height="28" Margin="302,55,0,0" VerticalAlignment="Top" Width="126"/>
+                    <TextBox x:Name="txtEmails" TextWrapping="Wrap" Margin="302,83,302,10" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
                     <Label Content="Significant Incidents" Margin="652,55,0,0" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Width="146"/>
-                    <TextBox x:Name="txtSignificantIncidents" TextWrapping="Wrap" IsEnabled="False" Margin="652,83,10,10" />
+                    <TextBox x:Name="txtSignificantIncidents" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="652,83,10,10" />
                 </Grid>
             </TabItem>
             <TabItem Header="SMS Messages">
                 <Grid Background="#FFE5E5E5">
                     <Label Content="SMS Messages" Margin="10,32,0,0" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Width="102"/>
-                    <TextBox x:Name="txtSMSMessages" TextWrapping="Wrap" IsEnabled="False" Margin="10,60,10,10"/>
+                    <TextBox x:Name="txtSMSMessages" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="10,60,10,10"/>
                 </Grid>
             </TabItem>
         </TabControl>
