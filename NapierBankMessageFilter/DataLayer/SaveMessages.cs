@@ -39,8 +39,9 @@ namespace NapierBankMessageFilter.DataLayer
                     }
                     break;
                 case "Tweet":
+                    Tweet tweet = (Tweet)message;
                     location = Path.GetFullPath(Path.Combine(location, @"..\..\..\Messages\Tweet"));
-                    output = JsonSerializer.Serialize(message);
+                    output = JsonSerializer.Serialize(tweet);
                     break;
                 case "SMS":
                     location = Path.GetFullPath(Path.Combine(location, @"..\..\..\Messages\SMS"));

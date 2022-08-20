@@ -59,14 +59,15 @@ namespace NapierBankMessageFilter.DataLayer
         /// <returns>
         /// A List of deserialized Messages
         /// </returns>
-        public static List<Message> DeserializeMessages(string msgType)
+        public static List<Message> DeserializeMessages(string msgType, List<Message> messages)
         {
             string location = AppDomain.CurrentDomain.BaseDirectory;
             string contents = "";
-            List <Message> list = new List<Message>();
-            List<Email> eList = new List<Email>();
             Message deserializedMsg;
             Email deserializedEmail;
+            SignificantIncident deserializedSI;
+            Tweet deserializedTweet;
+            SMS deserializedSMS;
 
             switch (msgType)
             {
@@ -79,6 +80,9 @@ namespace NapierBankMessageFilter.DataLayer
                 case "SMS":
                     location = Path.GetFullPath(Path.Combine(location, @"..\..\..\Messages\SMS"));
                     break;
+                case "SignificantIncident":
+                    location = Path.GetFullPath(Path.Combine(location, @"..\..\..\Messages\Email\SignificantIncident"));
+                    break;
             }
 
             if (Directory.EnumerateFileSystemEntries(location).Any())
@@ -89,18 +93,28 @@ namespace NapierBankMessageFilter.DataLayer
                     if (msgType == "Email")
                     {
                         deserializedEmail = JsonSerializer.Deserialize<Email>(contents);
-                        list.Add(deserializedEmail);
+                        messages.Add(deserializedEmail);
+                    }
+                    else if (msgType == "SignificantIncident")
+                    {
+                        deserializedSI = JsonSerializer.Deserialize<SignificantIncident>(contents);
+                        messages.Add(deserializedSI);
+                    }
+                    else if (msgType == "Tweet")
+                    {
+                        deserializedTweet = JsonSerializer.Deserialize<Tweet>(contents);
+                        messages.Add(deserializedTweet);
                     }
                     else
                     {
                         deserializedMsg = JsonSerializer.Deserialize<Message>(contents);
-                        list.Add(deserializedMsg);
+                        messages.Add(deserializedMsg);
                     } 
                 }
             }
             
 
-            return list;
+            return messages;
 
         }
 

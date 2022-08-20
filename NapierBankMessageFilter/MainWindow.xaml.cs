@@ -24,6 +24,7 @@ namespace NapierBankMessageFilter
         private string msgType = "";
         private string msgHeader = "";
         private string msg = "";
+
         Main main = new Main();
         Message message = new Message();
 
@@ -79,6 +80,7 @@ namespace NapierBankMessageFilter
                     txtMsgID.Clear();
                     txtMsgBody.Clear();
                     MessageBox.Show("Message Submitted!");
+                    btnEnd.IsEnabled = true;
                 }
                 else
                 {
@@ -89,6 +91,13 @@ namespace NapierBankMessageFilter
             {
                 throw new ArgumentNullException("A Null value was passed to the function, please change the parameter");
             }
+        }
+
+        private void btnEnd_Click(object sender, RoutedEventArgs e)
+        {
+            MessageWindow messageWindow = new MessageWindow(main);
+            this.Close();
+            messageWindow.Show();
         }
     }
 }

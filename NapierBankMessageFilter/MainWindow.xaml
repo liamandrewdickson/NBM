@@ -5,12 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NapierBankMessageFilter"
         mc:Ignorable="d"
-        Title="Napier Bank Messager" Height="450" Width="800">
+        Title="Napier Bank Messenger" Height="450" Width="800">
     <Grid>
-        <Label Content="Message Type" HorizontalAlignment="Left" Margin="37,64,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtMsgID" HorizontalAlignment="Left" Margin="37,90,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" MaxLength="10" TextChanged="txtMsgID_TextChanged"/>
-        <Label Content="Message Body" HorizontalAlignment="Left" Margin="37,113,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtMsgBody" HorizontalAlignment="Left" Margin="37,139,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="584" Height="102" IsEnabled="False"/>
-        <Button Name="btnSubmit" Content="Submit" HorizontalAlignment="Left" Margin="660,345,0,0" VerticalAlignment="Top" Height="38" Width="94" IsEnabled="False" Click="btnSubmit_Click"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Label Content="Message Type" HorizontalAlignment="Left" Margin="24,116,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtMsgID" HorizontalAlignment="Left" Margin="24,142,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" MaxLength="10" TextChanged="txtMsgID_TextChanged"/>
+        <Label Content="Message Body" HorizontalAlignment="Left" Margin="24,170,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtMsgBody" HorizontalAlignment="Left" Margin="24,196,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="584" Height="102" IsEnabled="False"/>
+        <Button Name="btnImportMessages" Content="Import Messages" HorizontalAlignment="Left" Margin="442,346,0,0" VerticalAlignment="Top" Height="38" Width="114"/>
+        <Button Name="btnSubmit" Content="Submit" HorizontalAlignment="Left" Margin="561,346,0,0" VerticalAlignment="Top" Height="38" Width="94" IsEnabled="False" Click="btnSubmit_Click"/>
+        <Button Name="btnEnd" Content="End" HorizontalAlignment="Left" Margin="660,346,0,0" VerticalAlignment="Top" Height="38" Width="94" Click="btnEnd_Click" />
+        <Image Name="NapierLogo" HorizontalAlignment="Left" Height="100" Margin="24,16,0,318" Source="/Assets/Edinburgh_Napier.jpg"/>
     </Grid>
 </Window>

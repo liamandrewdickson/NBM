@@ -69,26 +69,6 @@ namespace NapierBankMessageFilter.ApplicationLayer
 
         }
 
-        public string GetIncident(string msg)
-        {
-            string body = "";
-
-            int pFrom = msg.IndexOf("Subject: ") + "Subject: ".Length;
-            int pTo = msg.LastIndexOf("\nMessage Text: ");
-            string subject = msg.Substring(pFrom, pTo - pFrom);
-
-
-            if (!string.IsNullOrEmpty(msg))
-
-                    body = "Sender: \nMessage Text: ";
-            else
-            {
-                throw new ArgumentNullException("A Null value was passed to the function, please change the parameter");
-            }
-
-            return body;
-        }
-
         /// <summary>
         /// Gets the Incident Type from the subject of the email
         /// </summary>
@@ -153,6 +133,25 @@ namespace NapierBankMessageFilter.ApplicationLayer
             return IncidentType;
         }
 
+        /// <summary>
+        /// Gets the Sort Code and Incident Type from the Significant Incidents 
+        /// </summary>
+        /// <param name="significantIncidents"></param>
+        /// <returns>
+        /// A Dictionary of the Sort Codes and Incident Types
+        /// </returns>
+        public static Dictionary<string, string> GetSignificantIncidents(List<Message> significantIncidents)
+        {
+
+            Dictionary<string, string> sortAndType = new Dictionary<string, string>();
+
+            foreach (SignificantIncident si in significantIncidents)
+            {
+                sortAndType.Add(si.SortCode, si.IncidentType);
+            }
+
+            return sortAndType;
+        }
 
     }
 }

@@ -5,30 +5,33 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NapierBankMessageFilter"
         mc:Ignorable="d"
-        Title="Message Results" Height="450" Width="800">
+        Title="Message Results" Height="500" Width="900">
     <Grid>
         <TabControl>
             <TabItem Header="Tweets">
                 <Grid Background="#FFE5E5E5">
-                    <Label Content="Trending Hashtags" HorizontalAlignment="Left" Height="28" Margin="12,5,0,0" VerticalAlignment="Top" Width="126" RenderTransformOrigin="-0.527,0.495"/>
-                    <TextBox HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="375" Height="363" Margin="12,0,0,10"/>
-                    <Label Content="Mentions" HorizontalAlignment="Left" Height="28" Margin="412,5,0,0" VerticalAlignment="Top" Width="126" RenderTransformOrigin="-0.527,0.495"/>
-                    <TextBox HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="375" Height="363" Margin="412,0,0,10"/>
+                    <Label Content="Trending Hashtags" Margin="12,55,0,0" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Width="147" />
+                    <TextBox x:Name="txtTrendingHastags" TextWrapping="Wrap" IsEnabled="False" Margin="10,83,652,10"/>
+                    <Label Content="Tweets" HorizontalAlignment="Left" Height="28" Margin="302,55,0,0" VerticalAlignment="Top" Width="126" />
+                    <TextBox x:Name="txtTweets" TextWrapping="Wrap" IsEnabled="False" Margin="302,83,302,10" />
+                    <Label Content="Mentions" Margin="652,55,0,0" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Width="102"/>
+                    <TextBox x:Name="txtMentions"  TextWrapping="Wrap" IsEnabled="False" Margin="652,83,10,10"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Significant Incident Reports">
+            <TabItem Header="Emails">
                 <Grid Background="#FFE5E5E5">
-                    <TextBox HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Width="774" Height="386"/>
-                </Grid>
-            </TabItem>
-            <TabItem Header="TabItem">
-                <Grid Background="#FFE5E5E5">
-                    <TextBox HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Width="774" Height="386"/>
+                    <Label Content="Trending Hashtags" Margin="12,55,0,0" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Width="147" />
+                    <TextBox x:Name="txtQuarantined" TextWrapping="Wrap" IsEnabled="False" Margin="10,83,652,10"/>
+                    <Label Content="Tweets" HorizontalAlignment="Left" Height="28" Margin="302,55,0,0" VerticalAlignment="Top" Width="126" />
+                    <TextBox x:Name="txtEmails" HorizontalAlignment="Right" TextWrapping="Wrap" Width="290" IsEnabled="False" Margin="302,83,302,10"/>
+                    <Label Content="Mentions" Margin="652,55,0,0" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Width="102"/>
+                    <TextBox x:Name="txtSignificantIncidents" TextWrapping="Wrap" IsEnabled="False" Margin="652,83,10,10" />
                 </Grid>
             </TabItem>
             <TabItem Header="SMS Messages">
                 <Grid Background="#FFE5E5E5">
-                    <TextBox HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Width="774" Height="386"/>
+                    <Label Content="SMS Messages" Margin="10,32,0,0" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Width="102"/>
+                    <TextBox x:Name="txtSMSMessages" TextWrapping="Wrap" IsEnabled="False" Margin="10,60,10,10"/>
                 </Grid>
             </TabItem>
         </TabControl>
