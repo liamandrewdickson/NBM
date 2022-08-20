@@ -15,9 +15,8 @@ namespace NapierBankMessageFilterTests
         public void LoadTextWordsTest()
         {
             Dictionary<string, string> initialisms = LoadMessages.LoadTextWords();
-            Dictionary<string, string> eInitialisms = LoadMessages.LoadTextWords();
 
-            CollectionAssert.AreEqual(initialisms, eInitialisms);
+            Assert.IsNotNull(initialisms);
         }
         #endregion
 

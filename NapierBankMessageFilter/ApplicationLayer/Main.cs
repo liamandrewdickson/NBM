@@ -126,8 +126,9 @@ namespace NapierBankMessageFilter.ApplicationLayer
         /// <param name="msgBody"></param>
         /// <param name="msgHeader"></param>
         /// <param name="msgSender"></param>
-        public void ValidateMessage(string msg, string msgType, string msgBody, string msgHeader, string msgSender)
+        public bool ValidateMessage(string msg, string msgType, string msgBody, string msgHeader, string msgSender)
         {
+            bool submitted = false;
             string subject = "";
             Message message = new Message();
             bool validLimit = false;
@@ -143,13 +144,34 @@ namespace NapierBankMessageFilter.ApplicationLayer
                         if (subject.Contains("SIR"))
                         {
 
+                            SignificantIncident sI = new SignificantIncident();
+                            string sortCode = sI.GetSortCode(msgBody);
+                            bool validDate = sI.CheckDate(subject);
+                            if (validDate)
+                            {
+                                string incidentType = sI.GetIncidentType(msgBody);
+
+                                SignificantIncident significantIncident = new SignificantIncident(sortCode, incidentType, msgHeader, subject, msgType, msgBody, msgSender);
+                                validLimit = ValidateMessageLimit(msgType, msgSender, msg);
+                                if (validLimit)
+                                {
+                                    SaveMessages.SerializeMessage(significantIncident);
+                                    submitted = true;
+                                }
+                            }
+                            else { break; }
                         }
-                        Email email = new Email(msgHeader, subject, msgType, msgBody, msgSender);
-                        validLimit = ValidateMessageLimit(msgType, msgSender, msg);
-                        if (validLimit)
+                        else
                         {
-                            SaveMessages.SerializeMessage(email);
+                            Email email = new Email(msgHeader, subject, msgType, msgBody, msgSender);
+                            validLimit = ValidateMessageLimit(msgType, msgSender, msg);
+                            if (validLimit)
+                            {
+                                SaveMessages.SerializeMessage(email);
+                                submitted = true;
+                            }
                         }
+                        
                         break;
                     case "Tweet":
                         msgBody = message.GetTextSpeak(msgBody, Initialisms);
@@ -158,6 +180,7 @@ namespace NapierBankMessageFilter.ApplicationLayer
                         if (validLimit)
                         {
                             SaveMessages.SerializeMessage(tweet);
+                            submitted = true;
                         }
                         break;
                     case "SMS":
@@ -167,6 +190,7 @@ namespace NapierBankMessageFilter.ApplicationLayer
                         if (validLimit)
                         {
                             SaveMessages.SerializeMessage(sms);
+                            submitted = true;
                         }
                         break;
                 }
@@ -175,6 +199,7 @@ namespace NapierBankMessageFilter.ApplicationLayer
             {
                 throw new ArgumentNullException("A Null value was passed to the function, please change the parameter");
             }
+            return submitted;
         }
 
     }

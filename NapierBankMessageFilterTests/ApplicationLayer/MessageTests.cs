@@ -107,7 +107,7 @@ namespace NapierBankMessageFilterTests
         public void GetTextSpeakNullTest()
         {
             string body = "";
-            Dictionary<string, string> initialisms = LoadMessages.LoadTextWords();
+            Dictionary<string, string> initialisms = new Dictionary<string, string>();
 
             Assert.ThrowsException<ArgumentNullException>(() => message.GetTextSpeak(body, initialisms));
         }

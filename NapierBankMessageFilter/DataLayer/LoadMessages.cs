@@ -44,7 +44,7 @@ namespace NapierBankMessageFilter.DataLayer
         /// </summary>
         public static void InitialiseLocations()
         {
-            string[] locations = new string[] { @"..\..\..\Messages\Tweet", @"..\..\..\Messages\Email", @"..\..\..\Messages\SMS" };
+            string[] locations = new string[] { @"..\..\..\Messages\Tweet", @"..\..\..\Messages\Email", @"..\..\..\Messages\SMS", @"..\..\..\Messages\Email\SignificantIncident" };
 
             foreach (string location in locations)
             {

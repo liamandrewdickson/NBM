@@ -73,9 +73,17 @@ namespace NapierBankMessageFilter
 
             if (!String.IsNullOrEmpty(Msg) || !String.IsNullOrEmpty(MsgHeader))
             {
-                main.ValidateMessage(Msg, MsgType, message.GetMessageText(Msg), MsgHeader, message.GetMessageSender(MsgType, Msg));
-                txtMsgID.Clear();
-                txtMsgBody.Clear();
+                bool submitted = main.ValidateMessage(Msg, MsgType, message.GetMessageText(Msg), MsgHeader, message.GetMessageSender(MsgType, Msg));
+                if (submitted)
+                {
+                    txtMsgID.Clear();
+                    txtMsgBody.Clear();
+                    MessageBox.Show("Message Submitted!");
+                }
+                else
+                {
+                    MessageBox.Show("Message was invalid, please change the details and re-submit");
+                }
             }
             else
             {

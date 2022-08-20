@@ -12,6 +12,10 @@ namespace NapierBankMessageFilter.DataLayer
     public class SaveMessages
     {
 
+        /// <summary>
+        /// Serializes the passed Messages, Emails, SMSes and Tweets to Json
+        /// </summary>
+        /// <param name="message"></param>
         public static void SerializeMessage(Message message)
         {
             string fileName = message.Header + ".json";
@@ -22,8 +26,17 @@ namespace NapierBankMessageFilter.DataLayer
             {
                 case "Email":
                     Email email = (Email)message;
-                    location = Path.GetFullPath(Path.Combine(location, @"..\..\..\Messages\Email"));
-                    output = JsonSerializer.Serialize(email);
+                    if (email.Subject.Contains("SIR"))
+                    {
+                        SignificantIncident significantIncident = (SignificantIncident)email;
+                        location = Path.GetFullPath(Path.Combine(location, @"..\..\..\Messages\Email\SignificantIncident"));
+                        output = JsonSerializer.Serialize(significantIncident);
+                    }
+                    else
+                    {
+                        location = Path.GetFullPath(Path.Combine(location, @"..\..\..\Messages\Email"));
+                        output = JsonSerializer.Serialize(email);
+                    }
                     break;
                 case "Tweet":
                     location = Path.GetFullPath(Path.Combine(location, @"..\..\..\Messages\Tweet"));
