@@ -3,6 +3,8 @@ using NapierBankMessageFilter.ApplicationLayer;
 using NapierBankMessageFilter.DataLayer;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Security.Cryptography;
 
 namespace NapierBankMessageFilterTests
 {
@@ -60,6 +62,27 @@ namespace NapierBankMessageFilterTests
             }
 
         }
+        #endregion
+
+        #region CollectMessagesFromCSV
+        [TestMethod]
+        public void CollectMessagesFromCSVTest()
+        {
+            string path = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Assets\Emails.csv"));
+            string file = "Emails.csv";
+            Main main = new Main();
+
+            LoadMessages.CollectMessagesFromCSV(path, file, main);
+
+            DirectoryInfo di = new DirectoryInfo(Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Messages\Email")));
+
+            foreach (FileInfo f in di.GetFiles())
+            {
+                f.Delete();
+            }
+        }
+
+
         #endregion
     }
 }

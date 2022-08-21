@@ -18,6 +18,17 @@ namespace NapierBankMessageFilter.ApplicationLayer
         public string Body { get => _body; set => _body = value; }
         public string Sender { get => _sender; set => _sender = value; }
 
+
+        /// <summary>
+        /// Creates a new Message
+        /// </summary>
+        /// <param name="header"></param>
+        /// <param name="type"></param>
+        /// <param name="body"></param>
+        /// <param name="sender"></param>
+        /// <returns>
+        /// A Message with the parameters provided
+        /// </returns>
         public Message(string header, string type, string body, string sender)
         {
             Header = header;

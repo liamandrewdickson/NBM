@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NapierBankMessageFilter.ApplicationLayer;
 using System;
+using System.Collections.Generic;
 
 namespace NapierBankMessageFilterTests
 {
@@ -18,9 +19,13 @@ namespace NapierBankMessageFilterTests
             string msgType = "Email";
             string msgBody = "This is a test";
             string msgSender = "liam.dickson@liam.co.uk";
-            Email eResult = new Email("E123456789", "Hello", "Email", "This is a test", "liam.dickson@liam.co.uk");
+            List<string> urls = new List<string>();
+            urls.Add("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
 
-            Email aResult = new Email(msgHeader, subject, msgType, msgBody, msgSender);
+
+            Email eResult = new Email("E123456789", "Hello", "Email", "This is a test", "liam.dickson@liam.co.uk", urls);
+
+            Email aResult = new Email(msgHeader, subject, msgType, msgBody, msgSender, urls);
 
             Assert.AreEqual(eResult.Header, aResult.Header);
             Assert.AreEqual(eResult.Subject, aResult.Subject);

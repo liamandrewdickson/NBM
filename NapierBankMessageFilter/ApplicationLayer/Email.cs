@@ -15,6 +15,18 @@ namespace NapierBankMessageFilter.ApplicationLayer
         public string Subject { get => _subject; set => _subject = value; }
         public List<string> URLs { get => _urls; set => _urls = value; }
 
+        /// <summary>
+        /// Creates a new Email
+        /// </summary>
+        /// <param name="header"></param>
+        /// <param name="subject"></param>
+        /// <param name="type"></param>
+        /// <param name="body"></param>
+        /// <param name="sender"></param>
+        /// <param name="urls"></param>
+        /// <returns>
+        /// A Email with the parameters provided
+        /// </returns>
         public Email(string header, string subject, string type, string body, string sender, List<string> urls) : base(header, type, body, sender) 
         { 
             Subject = subject;
@@ -70,17 +82,17 @@ namespace NapierBankMessageFilter.ApplicationLayer
         }
 
 
-        /// <summary>
-        /// This method takes the body added by the user, and a list of URLs to be quarantined and removes the URLs from the body
+        /// <summary>chrome://vivaldi-webui/startpage?section=Speed-dials&background-color=#2f2f2f
+        /// Quarantines URLs in the body of the Email passed to the method
         /// </summary>
         /// <param name="body"></param>
-        /// <param name="QuarantineList"></param>
+        /// <param name="QuarantineURLs"></param>
         /// <returns>
-        /// A new version of body with the URLs replaced with the text "URL Quarantined" in triangle brackets
+        /// The body of the message with the URLs replaced with URL Quarantined
         /// </returns>
-        public string Quarantine(string body, List<string> QuarantineURLs)
+        public string Quarantine(string body, List<string> quarantineURLs)
         {
-            foreach (string url in QuarantineURLs)
+            foreach (string url in quarantineURLs)
             {
                 body = body.Replace(url, "<URL Quarantined>");
             }
@@ -90,11 +102,11 @@ namespace NapierBankMessageFilter.ApplicationLayer
 
 
         /// <summary>
-        /// This method takes a list of tweets and collates the mentions together
+        /// Gets the URLs from the passed Emails
         /// </summary>
         /// <param name="emails"></param>
         /// <returns>
-        /// A string list of mentions
+        /// A List of URLs 
         /// </returns>
         public static List<string> CollectURLs(List<Message> emails)
         {

@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
+using System.Windows.Interop;
 
 namespace NapierBankMessageFilter.DataLayer
 {
@@ -117,6 +118,49 @@ namespace NapierBankMessageFilter.DataLayer
 
         }
 
+        /// <summary>
+        /// Gets saved messages from proveided CSV file
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="file"></param>
+        /// <param name="main"></param>
+        /// <returns>
+        /// A List of deserialized Messages
+        /// </returns>
+        public static void CollectMessagesFromCSV(string path, string file, Main main)
+        {
+            Dictionary<string, string> data = new Dictionary<string, string>();
+            Message message = new Message();
+
+            using (var stream = new StreamReader(path))
+            {
+                while (!stream.EndOfStream)
+                {
+                    string line = stream.ReadLine();
+                    if (string.IsNullOrEmpty(line))
+                    {
+                        continue;
+                    }
+                    var words = line.Split(',');
+                    data.Add(words[0], words[1]);
+                }
+            }
+
+            foreach (KeyValuePair<string, string> kvp in data)
+            {
+                string header = kvp.Key;
+                string msg = kvp.Value;
+                string msgType = main.ValidateMessageType(header);
+
+                if (msgType == "Email")
+                {
+                    msg = msg.Replace("Subject:", "\nSubject:");
+                }
+                msg = msg.Replace("Message Text:", "\nMessage Text:");
+
+                main.ValidateMessage(msg, msgType, message.GetMessageText(msg), header, message.GetMessageSender(msgType, msg));
+            }
+        }
 
     }
 }

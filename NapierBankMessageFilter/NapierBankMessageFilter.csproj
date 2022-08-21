@@ -8,7 +8,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\Edinburgh_Napier.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="Assets\Edinburgh_Napier_Logo_Transparent.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Edinburgh_Napier.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>

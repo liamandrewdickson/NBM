@@ -16,6 +16,18 @@ namespace NapierBankMessageFilter.ApplicationLayer
         public List<string> TweetMentions { get => _tweetMentions; set => _tweetMentions = value; }
         public List<string> TweetHashTags { get => _tweetHashTags; set => _tweetHashTags = value; }
 
+        /// <summary>
+        /// Creates a new Tweet
+        /// </summary>
+        /// <param name="header"></param>
+        /// <param name="type"></param>
+        /// <param name="body"></param>
+        /// <param name="sender"></param>
+        /// <param name="tweetMentions"></param>
+        /// <param name="tweetHashTags"></param>
+        /// <returns>
+        /// A Tweet with the parameters provided
+        /// </returns>
         public Tweet(string header, string type, string body, string sender, List<string> tweetMentions, List<string> tweetHashTags) : base(header, type, body, sender)
         {
             TweetMentions = tweetMentions;
@@ -24,6 +36,13 @@ namespace NapierBankMessageFilter.ApplicationLayer
 
         public Tweet() { }
 
+        /// <summary>
+        /// Validates that the Tweeter of the message is correct
+        /// </summary>
+        /// <param name="tweeter"></param>
+        /// <returns>
+        /// A boolean of true if the Tweeter is valid
+        /// </returns>
         public bool ValidateTweeter(string tweeter)
         {
 
@@ -91,11 +110,11 @@ namespace NapierBankMessageFilter.ApplicationLayer
         }
 
         /// <summary>
-        /// This method takes a list of tweets and collates the mentions together
+        /// Collects the Mentions from Tweets and checks their usage
         /// </summary>
         /// <param name="tweets"></param>
         /// <returns>
-        /// A string list of mentions
+        /// A List of mentions
         /// </returns>
         public static List<string> CollectMentions(List<Message> tweets)
         {

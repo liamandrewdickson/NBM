@@ -16,6 +16,20 @@ namespace NapierBankMessageFilter.ApplicationLayer
         public string SortCode { get => _sortCode; set => _sortCode = value; }
         public string IncidentType { get => _significantIncidentType; set => _significantIncidentType = value; }
 
+        /// <summary>
+        /// Creates a new Significant Incident
+        /// </summary>
+        /// <param name="sortCode"></param>
+        /// <param name="incidentType"></param>
+        /// <param name="header"></param>
+        /// <param name="subject"></param>
+        /// <param name="type"></param>
+        /// <param name="body"></param>
+        /// <param name="sender"></param>
+        /// <param name="urls"></param>
+        /// <returns>
+        /// A Significant Incident with the parameters provided
+        /// </returns>
         public SignificantIncident(string sortCode, string incidentType, string header, string subject, string type, string body, string sender, List<string> urls) : base(header, subject, type, body, sender, urls)
         {
             SortCode = sortCode;

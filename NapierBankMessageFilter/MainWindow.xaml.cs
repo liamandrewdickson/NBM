@@ -1,4 +1,5 @@
 ﻿using NapierBankMessageFilter.ApplicationLayer;
+using NapierBankMessageFilter.DataLayer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Path = System.IO.Path;
 
 namespace NapierBankMessageFilter
 {
@@ -98,6 +100,20 @@ namespace NapierBankMessageFilter
             MessageWindow messageWindow = new MessageWindow(main);
             this.Close();
             messageWindow.Show();
+        }
+
+        private void btnImportMessages_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog ofd = new Microsoft.Win32.OpenFileDialog();
+
+            bool? response = ofd.ShowDialog();
+
+            if (response == true)
+            {
+                string filePath = ofd.FileName;
+                string fileName = Path.GetFileName(filePath);
+                LoadMessages.CollectMessagesFromCSV(filePath, fileName, main);
+            }
         }
     }
 }

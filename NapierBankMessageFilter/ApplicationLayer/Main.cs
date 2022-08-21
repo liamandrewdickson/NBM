@@ -69,7 +69,7 @@ namespace NapierBankMessageFilter.ApplicationLayer
         public string ValidateMessageType(string msgHeader)
         {
             string msgType = "";
-            Regex reg = new Regex(@"(?i)^(S|E|T){1}[1-9]{9}");
+            Regex reg = new Regex(@"(?i)^(S|E|T){1}[0-9]{9}");
 
             if (!string.IsNullOrEmpty(msgHeader))
             {
@@ -106,7 +106,8 @@ namespace NapierBankMessageFilter.ApplicationLayer
         /// Checks that the message has the correct length depending on the message type
         /// </summary>
         /// <param name="msgType"></param>
-        /// <param name="msg"></param>
+        /// <param name="msgSender"></param>
+        /// <param name="msgBody"></param>
         public bool ValidateMessageLimit(string msgType, string msgSender, string msgBody)
         {
             bool valid = false;
