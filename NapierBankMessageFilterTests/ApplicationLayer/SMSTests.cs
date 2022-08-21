@@ -32,7 +32,7 @@ namespace NapierBankMessageFilterTests
         [TestMethod]
         public void ValidatePhoneNumberTest()
         {
-            string phonenumber = "07884969094";
+            string phonenumber = "07884967095";
             bool aResult = sms.ValidatePhoneNumber(phonenumber);
 
             Assert.IsTrue(aResult);
@@ -54,14 +54,6 @@ namespace NapierBankMessageFilterTests
             bool aResult = sms.ValidatePhoneNumber(phonenumber);
 
             Assert.IsFalse(aResult);
-        }
-
-        [TestMethod]
-        public void ValidatePhoneNumberNullTest()
-        {
-            string phonenumber = "";
-
-            Assert.ThrowsException<ArgumentNullException>(() => sms.ValidatePhoneNumber(phonenumber));
         }
         #endregion
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace NapierBankMessageFilter.ApplicationLayer
 {
@@ -61,7 +62,7 @@ namespace NapierBankMessageFilter.ApplicationLayer
                 }
             else
             {
-                throw new ArgumentNullException("A Null value was passed to the function, please change the parameter");
+                MessageBox.Show("The Message Type passed to the function was null, please change the header");
             }
 
             return body;
@@ -91,7 +92,7 @@ namespace NapierBankMessageFilter.ApplicationLayer
             }
             else
             {
-                throw new ArgumentNullException("A Null value was passed to the function, please change the parameter");
+                MessageBox.Show("The Message Sender passed to the function was null, please change the Message Sender");
             }
 
             return sender;
@@ -117,7 +118,7 @@ namespace NapierBankMessageFilter.ApplicationLayer
             }
             else
             {
-                throw new ArgumentNullException("A Null value was passed to the function, please change the parameter");
+                MessageBox.Show("The Message Text passed to the function was null, please change the Message Text");
             }
 
             return body;
@@ -142,7 +143,7 @@ namespace NapierBankMessageFilter.ApplicationLayer
             }
             else
             {
-                throw new ArgumentNullException("A Null value was passed to the function, please change the parameter");
+                MessageBox.Show("The Message Text passed to the function was empty, please change the Message Text");
             }
 
             return body;

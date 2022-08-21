@@ -91,7 +91,7 @@ namespace NapierBankMessageFilter
             }
             else
             {
-                throw new ArgumentNullException("A Null value was passed to the function, please change the parameter");
+                MessageBox.Show("The Message passed to the function was null, please change the message");
             }
         }
 

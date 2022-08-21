@@ -61,14 +61,6 @@ namespace NapierBankMessageFilterTests
 
             Assert.IsFalse(aResult);
         }
-
-        [TestMethod]
-        public void ValidateTweeterNullTest()
-        {
-            string tweeter = "";
-
-            Assert.ThrowsException<ArgumentNullException>(() => tweet.ValidateTweeter(tweeter));
-        }
         #endregion
 
     }

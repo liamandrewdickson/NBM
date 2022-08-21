@@ -29,14 +29,6 @@ namespace NapierBankMessageFilterTests
                 Assert.AreEqual(eResult, aResult);
             }
         }
-
-        [TestMethod]
-        public void SetMessageTitlesNullTest()
-        {
-            string msgType = "";
-
-            Assert.ThrowsException<ArgumentNullException>(() => message.SetMessageTitles(msgType));
-        }
         #endregion
 
         #region GetMessageSender
@@ -59,16 +51,6 @@ namespace NapierBankMessageFilterTests
                 Assert.AreEqual(eResult, aResult);
             }
         }
-
-        [TestMethod]
-        public void GetMessageSenderNullTest()
-        {
-            string msgType = "";
-            string msg = "";
-
-            Assert.ThrowsException<ArgumentNullException>(() => message.GetMessageSender(msgType, msg));
-        }
-
         #endregion
 
         #region GetMessageText
@@ -80,14 +62,6 @@ namespace NapierBankMessageFilterTests
 
             string aResult = message.GetMessageText(msg);
             Assert.AreEqual(eResult, aResult);
-        }
-
-        [TestMethod]
-        public void GetMessageTextNullTest()
-        {
-            string msg = "";
-
-            Assert.ThrowsException<ArgumentNullException>(() => message.GetMessageText(msg));
         }
         #endregion
 
@@ -101,15 +75,6 @@ namespace NapierBankMessageFilterTests
             string aResult = message.GetTextSpeak(body, initialisms);
 
             Assert.AreEqual(eResult, aResult);
-        }
-
-        [TestMethod]
-        public void GetTextSpeakNullTest()
-        {
-            string body = "";
-            Dictionary<string, string> initialisms = new Dictionary<string, string>();
-
-            Assert.ThrowsException<ArgumentNullException>(() => message.GetTextSpeak(body, initialisms));
         }
         #endregion
 

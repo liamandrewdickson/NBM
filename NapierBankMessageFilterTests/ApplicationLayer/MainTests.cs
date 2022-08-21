@@ -44,14 +44,6 @@ namespace NapierBankMessageFilterTests
 
         }
 
-
-        [TestMethod]
-        public void ValidateMessageTypeNullTest()
-        {
-            string msgID = "";
-
-            Assert.ThrowsException<ArgumentNullException>(() => main.ValidateMessageType(msgID));
-        }
         #endregion
 
         #region ValidateMessageLimit
@@ -104,15 +96,6 @@ namespace NapierBankMessageFilterTests
 
         }
 
-        [TestMethod]
-        public void ValidateMessageLimitNullTest()
-        {
-            string msgType = "Email";
-            string msgSender = "liam.dickson@liam.co.uk";
-            string msgBody = "";
-
-            Assert.ThrowsException<ArgumentNullException>(() => main.ValidateMessageLimit(msgType, msgSender, msgBody));
-        }
         #endregion
 
         #region ValidateMessage
@@ -168,17 +151,6 @@ namespace NapierBankMessageFilterTests
             Assert.IsTrue(main.ValidateMessage(msg, msgType, msgBody, msgHeader, msgSender));
         }
 
-        [TestMethod]
-        public void ValidateMessageNullTest()
-        {
-            string msg = "";
-            string msgType = "";
-            string msgBody = "";
-            string msgHeader = "";
-            string msgSender = "";
-
-            Assert.ThrowsException<ArgumentNullException>(() => main.ValidateMessage(msg, msgType, msgBody, msgHeader, msgSender));
-        }
         #endregion
     }
 }

@@ -5,6 +5,7 @@ using System.Security.Policy;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace NapierBankMessageFilter.ApplicationLayer
 {
@@ -142,7 +143,7 @@ namespace NapierBankMessageFilter.ApplicationLayer
             }
             else
             {
-                throw new ArgumentNullException("A Null value was passed to the function, please change the parameter");
+                MessageBox.Show("The Message Text passed to the function was null, please change the Message Text");
             }
 
             return IncidentType;

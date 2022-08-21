@@ -96,7 +96,7 @@ namespace NapierBankMessageFilter.ApplicationLayer
             }
             else
             {
-                throw new ArgumentNullException("A Null value was passed to the function, please change the parameter");
+                MessageBox.Show("The Message Header was passed to the function was null, please change the Message Header");
             }
             
             return msgType;
@@ -145,7 +145,7 @@ namespace NapierBankMessageFilter.ApplicationLayer
             }
             else
             {
-                throw new ArgumentNullException("A Null value was passed to the function, please change the parameter");
+                MessageBox.Show("The Message Body passed to the function was null, please change the Message Body");
             }
             return valid;
         }
@@ -186,11 +186,12 @@ namespace NapierBankMessageFilter.ApplicationLayer
                                 string incidentType = sI.GetIncidentType(msgBody);
 
                                 SignificantIncident significantIncident = new SignificantIncident(sortCode, incidentType, msgHeader, subject, msgType, msgBody, msgSender, QuarantinedURLs);
-                                validLimit = ValidateMessageLimit(msgType, msgSender, msg);
+                                validLimit = ValidateMessageLimit(msgType, msgSender, msgBody);
                                 if (validLimit)
                                 {
                                     SaveMessages.SerializeMessage(significantIncident);
-                                    LoadMessages.DeserializeMessages("SignificantIncident", SignificantIncidents);
+                                    SignificantIncidents = new List<Message>();
+                                    SignificantIncidents = LoadMessages.DeserializeMessages("SignificantIncident", SignificantIncidents);
                                     SortAndType = SignificantIncident.GetSignificantIncidents(SignificantIncidents);
                                     submitted = true;
                                 }
@@ -200,12 +201,12 @@ namespace NapierBankMessageFilter.ApplicationLayer
                         else
                         {
                             Email email = new Email(msgHeader, subject, msgType, msgBody, msgSender, QuarantinedURLs);
-                            validLimit = ValidateMessageLimit(msgType, msgSender, msg);
+                            validLimit = ValidateMessageLimit(msgType, msgSender, msgBody);
                             if (validLimit)
                             {
                                 SaveMessages.SerializeMessage(email);
                                 submitted = true;
-                            }
+                            } else { break; }
                         }
                         
                         break;
@@ -240,7 +241,7 @@ namespace NapierBankMessageFilter.ApplicationLayer
             }
             else
             {
-                throw new ArgumentNullException("A Null value was passed to the function, please change the parameter");
+                MessageBox.Show("One of the message values was null or empty that was passed to the function, please change them to have values");
             }
             return submitted;
         }

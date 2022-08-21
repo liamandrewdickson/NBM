@@ -22,13 +22,6 @@ namespace NapierBankMessageFilterTests
             }
 
         }
-
-        [TestMethod]
-        public void GetIncidentTypeNullTest()
-        {
-            string subject = "";
-            Assert.ThrowsException<ArgumentNullException>(() => significantIncident.GetIncidentType(subject));
-        }
         #endregion
 
     }

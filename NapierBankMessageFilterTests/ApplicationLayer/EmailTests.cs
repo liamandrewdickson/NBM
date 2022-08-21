@@ -46,13 +46,6 @@ namespace NapierBankMessageFilterTests
             Assert.AreEqual(eResult, aResult);
         }
 
-        [TestMethod]
-        public void GetSubjectNullTest()
-        {
-            string msg = "Sender: liam.dickson@liam.co.uk \nSubject: \nMessage Text: This is a test";
-
-            Assert.ThrowsException<ArgumentNullException>(() => email.GetSubject(msg));
-        }
         #endregion
     }
 }
